@@ -33,23 +33,24 @@ app.get("/home", async(req, res) => {
 app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
 });
-
-app.get('/data', async(req, res)=>{
-const dbRef = ref(getDatabase());
-get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
-  if (snapshot.exists()) {
-    const data = snapshot.val();
-    const filteredData = Object.values(data).filter(item => item !== null); 
-    res.send(filteredData);
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
-})
-
-
+app.get('/data', async (req, res) => {
+    const dbRef = ref(getDatabase());
+  
+    get(child(dbRef, "data/" + req.query.path))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // Directly return the raw data from the snapshot
+          res.json(snapshot.val());
+        } else {
+          res.status(404).send({ error: "No data available" });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send({ error: "Internal Server Error" });
+      });
+  });
+  
 
 //EXAMPLE
 // async function getData() {

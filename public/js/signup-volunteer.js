@@ -48,6 +48,24 @@ function getBase64(file) {
     });
 }
 
+async function getData() {
+    const url = "/data";
+    const params = new URLSearchParams({ path: "users" });
+    try {
+      const response = await fetch(`${url}?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  
+  document.addEventListener("DOMContentLoaded", getData);
+
 async function postVolunteer({ accountName, image, name, dob, email, phone, password }) {
     const url = "/data";
     try {
