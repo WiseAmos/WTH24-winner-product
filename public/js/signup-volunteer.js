@@ -1,13 +1,14 @@
-document.getElementById('profile-upload').addEventListener('change', function(event) {
+document.getElementById('profile-upload').addEventListener('change', function (event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             document.getElementById('profile-image').src = e.target.result; // Set the image preview
         };
         reader.readAsDataURL(file); // Read the file as a data URL
     }
 });
+
 document.querySelector("form").addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent form submission
 
@@ -26,7 +27,20 @@ document.querySelector("form").addEventListener("submit", async function (event)
         base64Image = await getBase64(profileUpload);
     }
 
-    // Call the postVolunteer function
+    // Call the getData function to retrieve existing account names
+    const existingData = await getData();
+    console.log(existingData);
+    if (existingData) {
+        // Check if the accountName already exists in the retrieved data
+        const accountExists = Object.keys(existingData).some(key => key === accountName);
+
+        if (accountExists) {
+            alert("Account name already exists. Please choose a different account name.");
+            return; // Stop the form submission
+        }
+    }
+
+    // If account name is unique, proceed to call the postVolunteer function
     await postVolunteer({
         accountName,
         image: base64Image,
@@ -48,23 +62,25 @@ function getBase64(file) {
     });
 }
 
+// Function to fetch existing data
 async function getData() {
     const url = "/data";
-    const params = new URLSearchParams({ path: "users" });
+    const params = new URLSearchParams({ path: "users" }); // Assuming "users" is the key path
     try {
-      const response = await fetch(`${url}?${params.toString()}`);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-  
-      const json = await response.json();
-      console.log(json);
+        const response = await fetch(`${url}?${params.toString()}`);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        return json; // Return the fetched data
     } catch (error) {
-      console.error(error.message);
+        console.error(error.message);
+        return null; // Return null if there was an error
     }
-  }
-  
-  document.addEventListener("DOMContentLoaded", getData);
+}
+
+
 
 async function postVolunteer({ accountName, image, name, dob, email, phone, password }) {
     const url = "/data";
