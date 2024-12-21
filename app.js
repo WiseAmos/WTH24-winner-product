@@ -39,8 +39,10 @@ app.get('/data', async (req, res) => {
     get(child(dbRef, "data/" + req.query.path))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          // Directly return the raw data from the snapshot
-          res.json(snapshot.val());
+            const data = snapshot.val();
+            // Directly return the raw data from the snapshot
+            const filteredData = Object.values(data).filter(item => item !== null);
+            res.json(filteredData);
         } else {
           res.status(404).send({ error: "No data available" });
         }
@@ -79,8 +81,8 @@ app.post('/data', async (req, res) => {
       const newKey = push(usersRef).key;
   
       const updateData = {};
-      updateData[newKey] = received["data"];
-      await update(usersRef, received["data"]);
+      updateData[newKey] = filteredData; // Use filtered data for update
+      await update(usersRef, updateData);  // Update with filtered data
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
       res.status(200).send({ success: true });
