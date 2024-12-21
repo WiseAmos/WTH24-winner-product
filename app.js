@@ -43,7 +43,7 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 // async function getData() {
 //     const url = "/data";
 //     try {
-//       const response = await fetch(url+"?path=users");
+//       const response = await fetch(url+"?path=   ");
 //       if (!response.ok) {
 //         throw new Error(`Response status: ${response.status}`);
 //       }
