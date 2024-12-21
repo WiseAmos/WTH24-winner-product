@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
     console.log(button)
     button.addEventListener("click",()=>{
-        postData("data/food","")
+        postData("data/food","" )
     })
 })
 
@@ -59,7 +59,7 @@ function updateProgress(current, total) {
     }
   }
 
-  getData()
+  // getData()
 
 
   async function postData(path,datainside) {
@@ -86,4 +86,4 @@ function updateProgress(current, total) {
     }
   }
 
-  postData()
+  // postData()
