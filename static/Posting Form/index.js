@@ -40,7 +40,7 @@ function updateProgress(current, total) {
   async function getData() {
     const url = "/data";
     try {
-      const response = await fetch(url+"?path=users");
+      const response = await fetch(url+"?path=data");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -86,5 +86,3 @@ function updateProgress(current, total) {
       console.error(error.message);
     }
   }
-
-  postData()
