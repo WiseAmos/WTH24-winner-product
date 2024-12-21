@@ -6,7 +6,6 @@ import { getDatabase, ref, child, get } from "firebase/database";
 
 
 const app = express();
-// const staticMiddleware = express.static("./static"); // Path to the public folder
 
 app.use(express.static(path.join(__dirname, '/static')));
 
