@@ -40,6 +40,7 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 });
 })
 
+//EXAMPLE
 // async function getData() {
 //     const url = "/data";
 //     try {
@@ -76,8 +77,44 @@ app.post('/data', async (req, res) => {
       res.status(500).send({ success: false, error: error.message });
     }
   });
+
+//EXAMPLE
+//   async function postData() {
+//     const url = "/data";
+//     try {
+//       const response = await fetch("/data", {
+//         method: "POST",
+//         body: JSON.stringify({
+//           path:"users",
+//           data: {volunteer1:{
+//             role: "volunteer",
+//             image: "https://example.com/image.jpg",
+//             name: "Ian douglas",
+//             dob: "2006-06-15",
+//             email: "charlie.brown@example.com",
+//             phone: "+3344556677",
+//             password: "volunteerpassword123"
+//           }}
+//         }),
+//         headers: {
+//           "Content-type": "application/json; charset=UTF-8"
+//         }
+//       });
+//       if (!response.ok) {
+//         throw new Error(`Response status: ${response.status}`);
+//       }
   
-  app.post('/nukedatabase', async (req, res) => {
+//       const json = await response.json();
+//       console.log(json);
+//     } catch (error) {
+//       console.error(error.message);
+//     }
+//   }
+
+//   postData()
+
+
+  app.get('/nukedatabase', async (req, res) => {
     try {
       // Reference to the root of the database
       const rootRef = ref(db);
