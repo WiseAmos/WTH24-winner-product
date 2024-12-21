@@ -12,7 +12,9 @@ app.use(express.static(path.join(__dirname, '/static')));
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
 });
-
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup.html'));
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
@@ -40,6 +42,8 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 });
 })
 
+
+
 // async function getData() {
 //     const url = "/data";
 //     try {
@@ -62,7 +66,7 @@ app.post('/data', async (req, res) => {
       console.log("Path:", received["path"]);
       console.log("Data:", received["data"]);
   
-      const usersRef = ref(db, received["path"]);
+      const usersRef = ref(db, "data/" + received["path"]);
       const newKey = push(usersRef).key;
   
       const updateData = {};
