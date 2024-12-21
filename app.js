@@ -28,9 +28,8 @@ app.get("/foodDetails", async(req, res) => {
 });
 
 app.get('/data', async(req, res)=>{
-
 const dbRef = ref(getDatabase());
-get(child(dbRef,req["path"])).then((snapshot) => {
+get(child(dbRef,req["query"]["path"])).then((snapshot) => {
   if (snapshot.exists()) {
     res.send(snapshot.val());
   } else {
@@ -39,6 +38,11 @@ get(child(dbRef,req["path"])).then((snapshot) => {
 }).catch((error) => {
   console.error(error);
 });
+})
+
+
+app.post('/data',async(req, res) => {
+    res.send("")
 })
 
 

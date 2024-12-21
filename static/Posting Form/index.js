@@ -1,3 +1,5 @@
+
+
 // Function to update progress bar with keyframes
 function updateProgress(current, total) {
     const progressValue = document.querySelector('.progress-value');
@@ -38,9 +40,7 @@ function updateProgress(current, total) {
   async function getData() {
     const url = "/data";
     try {
-      const response = await fetch(url,+ new URLSearchParams({
-        path: 'users'
-        }));
+      const response = await fetch(url+"?path=users");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
