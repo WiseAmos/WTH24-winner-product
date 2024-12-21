@@ -9,17 +9,10 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
 
-app.use(express.static(path.join(__dirname, '/public')));
-
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
 });
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/html/signup.html'));
-});
-app.get('/signup/signup-volunteer', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/html/signup-volunteer.html'));
-});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
@@ -31,7 +24,7 @@ app.get("/home", async(req, res) => {
 });
 
 app.get("/foodDetails", async(req, res) => {
-    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
+    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
 app.get('/data', async (req, res) => {
     const dbRef = ref(getDatabase());
@@ -39,8 +32,10 @@ app.get('/data', async (req, res) => {
     get(child(dbRef, "data/" + req.query.path))
       .then((snapshot) => {
         if (snapshot.exists()) {
-          // Directly return the raw data from the snapshot
-          res.json(snapshot.val());
+            const data = snapshot.val();
+            // Directly return the raw data from the snapshot
+            const filteredData = Object.values(data).filter(item => item !== null);
+            res.json(filteredData);
         } else {
           res.status(404).send({ error: "No data available" });
         }
@@ -79,8 +74,8 @@ app.post('/data', async (req, res) => {
       const newKey = push(usersRef).key;
   
       const updateData = {};
-      updateData[newKey] = received["data"];
-      await update(usersRef, received["data"]);
+      updateData[newKey] = filteredData; // Use filtered data for update
+      await update(usersRef, updateData);  // Update with filtered data
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
       res.status(200).send({ success: true });

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
-    const foodApiUrl = 'http://localhost:3000/data/?path=data/foodAnnouncement';
+    const foodApiUrl = 'http://localhost:3000/data/?path=announcements';
     
     // Select the container where the food announcements will go
     const foodCardsContainer = document.querySelector('.foodCardsContainer');
@@ -44,8 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     `;
 
-                    // Add click event to navigate to the /foodDetails page
+                    // Add click event to navigate to the /foodDetails page and store the clicked data
                     foodCard.addEventListener('click', () => {
+                        // Store the clicked food item data in sessionStorage under "previouslyClicked"
+                        let previouslyClicked = JSON.parse(sessionStorage.getItem('previouslyClicked')) || [];
+                        previouslyClicked.push(foodItem); // Add the clicked food item to the array
+                        sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+
+                        // Redirect to the food details page
                         window.location.href = '/foodDetails';
                     });
 
@@ -63,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to fetch clothing data and store it in sessionStorage
     async function fetchClothingData() {
         try {
-            const response = await fetch('http://localhost:3000/data/?path=data/posts');
+            const response = await fetch('http://localhost:3000/data/?path=announcements/clothAnnouncements');
             const data = await response.json();
     
             // Save the data in sessionStorage

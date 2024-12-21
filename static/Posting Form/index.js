@@ -1,6 +1,10 @@
+const food = sessionStorage.getItem("fooditem")
 document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
     console.log(button)
+    button.addEventListener("click",()=>{
+        postData("data/food","")
+    })
 })
 
 // Function to update progress bar with keyframes
@@ -40,8 +44,8 @@ function updateProgress(current, total) {
   setTimeout(() => updateProgress(5, 10), 10); // Updates to 8/10 after 1 second
   
 
-  async function getData() {
-    const url = "/data";
+  async function getData(path) {
+    const url = "/data"+path;
     try {
       const response = await fetch(url+"?path=");
       if (!response.ok) {
@@ -58,22 +62,14 @@ function updateProgress(current, total) {
   getData()
 
 
-  async function postData() {
-    const url = "/data";
+  async function postData(path,datainside) {
+    const url = "/data"+path;
     try {
-      const response = await fetch("/data", {
+      const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
           path:"users",
-          data: {volunteer1:{
-            role: "volunteer",
-            image: "https://example.com/image.jpg",
-            name: "IAN IS A FAT DONKEY",
-            dob: "2006-06-15",
-            email: "charlie.brown@example.com",
-            phone: "+3344556677",
-            password: "volunteerpassword123"
-          }}
+          data:datainside
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
