@@ -24,21 +24,28 @@ app.get("/home", async(req, res) => {
 });
 
 app.get("/foodDetails", async(req, res) => {
-    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
+    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
-
-app.get('/data', async(req, res)=>{
-const dbRef = ref(getDatabase());
-get(child(dbRef,req["query"]["path"])).then((snapshot) => {
-  if (snapshot.exists()) {
-    res.send(snapshot.val());
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
-})
+app.get('/data', async (req, res) => {
+    const dbRef = ref(getDatabase());
+  
+    get(child(dbRef, "data/" + req.query.path))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            // Directly return the raw data from the snapshot
+            const filteredData = Object.values(data).filter(item => item !== null);
+            res.json(filteredData);
+        } else {
+          res.status(404).send({ error: "No data available" });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send({ error: "Internal Server Error" });
+      });
+  });
+  
 
 //EXAMPLE
 // async function getData() {
@@ -67,8 +74,8 @@ app.post('/data', async (req, res) => {
       const newKey = push(usersRef).key;
   
       const updateData = {};
-      updateData[newKey] = received["data"];
-      await update(usersRef, updateData);
+      updateData[newKey] = filteredData; // Use filtered data for update
+      await update(usersRef, updateData);  // Update with filtered data
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
       res.status(200).send({ success: true });
