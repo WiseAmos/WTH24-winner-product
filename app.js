@@ -1,8 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
+import path from "path";
 
 const app = express();
-const staticMiddleware = express.static("./public"); // Path to the public folder
+// const staticMiddleware = express.static("./static"); // Path to the public folder
+
+app.use(express.static(path.join(__dirname, '/static')));
+
+app.get('/announcement', (req, res) => {
+    res.sendFile(path.join(__dirname, '/static/post/post.html'));
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

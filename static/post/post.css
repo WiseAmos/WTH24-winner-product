@@ -1,0 +1,151 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+.app-container {
+    max-width: 430px;
+    margin: auto;
+    margin-bottom: 80px;
+    background-color: white;
+    border-radius: 16px;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    overflow-y: auto;
+}
+.header {
+    background-color: #0062FF;
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+.view-all {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+.my-communities {
+    padding: 16px;
+}
+.community-list {
+    display: flex;
+    gap: 16px;
+}
+.community-item {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.community-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #e9ecef;
+}
+.tab {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+.tab.active {
+    border-bottom: 3px solid #0062FF;
+    color: #0062FF;
+}   
+.content-section {
+    padding: 16px;
+    display: none;
+}
+.content-section.active {
+    display: block;
+}
+
+.announcement, .post {
+    background-color: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.announcement-header, .post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.announcement-image img, .post-image img {
+    width: 100%;
+    display: block;
+}
+.announcement-content, .post-content {
+    padding: 12px;
+}
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-top: 1px solid #e9ecef;
+}
+.announcement a, .post-content a {
+    margin-left: 260px;
+}
+.announcement a, .post a, button.like, button.comment {
+    text-decoration: none;
+    color: black;
+}
+.fab {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    background-color: #0062FF;
+    color: white;
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-top: 1px solid #e9ecef;
+    padding: 8px 0;
+}
+.bottom-nav button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+}
