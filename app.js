@@ -23,6 +23,14 @@ app.get("/home", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/home/home.html"));
 });
 
+// app.get("/request", async(req, res) => {
+//     res.sendFile(path.join(__dirname + "/static/request/request.html"));
+// });
+
+app.get("/request/create", async(req, res) => {
+  res.sendFile(path.join(__dirname + "/static/requestCreate/requestCreate.html"));
+});
+
 app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
 });

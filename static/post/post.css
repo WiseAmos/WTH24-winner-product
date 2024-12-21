@@ -83,7 +83,7 @@ body {
     display: block;
 }
 
-.announcement{
+/* .announcement{
     background-color: white;
     border: 1px solid #e9ecef;
     border-radius: 8px;
@@ -91,11 +91,12 @@ body {
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.announcement-header{
+
+.announcement-title {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
+    padding-left: 12px;
+    padding-top: 15px;
 }
 
 .avatar {
@@ -110,19 +111,106 @@ body {
 }
 .announcement-content {
     padding: 12px;
+    padding-top: 4px;
 }
-/* .post-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 12px;
-    border-top: 1px solid #e9ecef;
-} */
+
 .announcement a{
     margin-left: 260px;
 }
 .announcement a, button.like, button.comment {
     text-decoration: none;
     color: black;
+} */
+/* .post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-top: 1px solid #e9ecef;
+} */
+ /* Announcements Section Styling */
+.announcements-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Individual Announcement Card */
+.announcement {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Header Styling */
+.announcement-header {
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+
+.announcement-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.announcement-store {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Body Styling */
+.announcement-body {
+    padding: 15px;
+}
+
+.announcement-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.announcement-description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Details Styling */
+.announcement-details p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.announcement-details p i {
+    margin-right: 8px;
+    color: #888;
+}
+
+.announcement-details p strong {
+    margin-right: 5px;
+    color: #333;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .announcement {
+        margin: 10px 0;
+    }
+
+    .announcement-header,
+    .announcement-body {
+        padding: 10px;
+    }
 }
 
 .info {
@@ -152,7 +240,6 @@ body {
     align-items: center;
     margin-bottom: 1.5rem;
 }
-
 .donatedClothingsContent {
     display: flex;
     flex-wrap: wrap;
