@@ -1,4 +1,3 @@
-// home.js
 document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
     const foodApiUrl = 'http://localhost:3000/data/?path=data/foodAnnouncement';
@@ -15,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Check if the data is an array
             if (Array.isArray(data)) {
+                // Save the data in sessionStorage
+                sessionStorage.setItem('foodAnnouncements', JSON.stringify(data));
+
                 // Clear any previous content in the container
                 foodCardsContainer.innerHTML = '';
 
@@ -42,6 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                     `;
 
+                    // Add click event to navigate to the /foodDetails page
+                    foodCard.addEventListener('click', () => {
+                        window.location.href = '/foodDetails';
+                    });
+
                     // Append the food card to the food cards container
                     foodCardsContainer.appendChild(foodCard);
                 });
@@ -53,6 +60,64 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Function to fetch clothing data and store it in sessionStorage
+    async function fetchClothingData() {
+        try {
+            const response = await fetch('http://localhost:3000/data/?path=data/posts');
+            const data = await response.json();
+    
+            // Save the data in sessionStorage
+            sessionStorage.setItem('clothingData', JSON.stringify(data));
+    
+            // Select the container where the clothing cards will be displayed
+            const contentContainer = document.querySelector('.donatedClothingsContent');
+    
+            // Clear the content container before appending new items
+            contentContainer.innerHTML = '';
+    
+            // Loop through the fetched data and create clothing cards dynamically
+            data.forEach(item => {
+                const clothingCard = document.createElement('div');
+                clothingCard.classList.add('clothingCardContainer');
+    
+                // Create the image element
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = 'Clothing Image';
+    
+                // Create the title element
+                const title = document.createElement('p');
+                title.classList.add('productTitle');
+                title.textContent = item.title;
+    
+                // Create the info div with publisher and heart icon
+                const info = document.createElement('div');
+                info.classList.add('info');
+    
+                const publisher = document.createElement('p');
+                publisher.textContent = item.publisher;
+    
+                const heartIcon = document.createElement('i');
+                heartIcon.classList.add('fa-regular', 'fa-heart', 'heart');
+    
+                // Append elements to their respective containers
+                info.appendChild(publisher);
+                info.appendChild(heartIcon);
+                clothingCard.appendChild(img);
+                clothingCard.appendChild(title);
+                clothingCard.appendChild(info);
+    
+                // Append the clothing card to the content container
+                contentContainer.appendChild(clothingCard);
+            });
+        } catch (error) {
+            console.error('Error fetching clothing data:', error);
+        }
+    }
+
     // Call the function to fetch and display food announcements when the page loads
     fetchFoodAnnouncements();
+
+    // Call the function to fetch and display the data
+    fetchClothingData();
 });
