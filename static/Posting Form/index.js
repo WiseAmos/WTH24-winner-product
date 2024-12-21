@@ -35,27 +35,21 @@ function updateProgress(current, total) {
   setTimeout(() => updateProgress(5, 10), 10); // Updates to 8/10 after 1 second
   
 
+  async function getData() {
+    const url = "/data";
+    try {
+      const response = await fetch(url,+ new URLSearchParams({
+        path: 'users'
+        }));
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
-const {initializeApp} = require("firebase/app");
-const {getDatabase} = require("firebase/database");
-
-
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
-const firebaseConfig = {
-  // ...
-  // The value of `databaseURL` depends on the location of the database
-  databaseURL: "https://wth24-winner-product-default-rtdb.asia-southeast1.firebasedatabase.app",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-
-// Initialize Realtime Database and get a reference to the service
-const database = getDatabase(app);
-var starCountRef =database.ref('posts/' + postId + '/starCount');
-starCountRef.on('value', (snapshot) => {
-  const data = snapshot.val();
-  updateStarCount(postElement, data);
-});
+  getData()
