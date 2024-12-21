@@ -138,6 +138,11 @@ app.post('/data', async (req, res) => {
       res.status(500).send({ success: false, error: error.message });
     }
   });
+
+
+  app.get('/recomendations', async (req, res) => {
+    res.send({"dude":"chill"})
+  });
   
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

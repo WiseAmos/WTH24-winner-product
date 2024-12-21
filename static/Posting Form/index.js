@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         postData("announcements/food/" + food_identifier, { quantityLeft: newQuantityLeft });
         setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])-1,food["totalQuantity"]), 10);
         sessionStorage.setItem("clicked",false)
+
+        console.log(fetch("/recomendations"))
       }
     })
 })
@@ -97,4 +99,9 @@ function updateProgress(current, total) {
     } catch (error) {
       console.error(error.message);
     }
+  }
+
+
+  async function recomendme(username){
+    data = await fetch("/recomendations")
   }
