@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../volunteerHome/volunteerHome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Volunteer Home</title>
+</head>
+<body>
+    <header class="header">
+        <div class="profile">
+            <div class="profile-icon">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <span class="username">Username</span>
+        </div>
+        <div class="notifications">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+    </header>
+    <section class="request-section">
+        <h2 class="section-title">Food Delivery Requests</h2>
+        <div class="card-container">
+            <!-- Card 1 -->
+            <div class="card" onclick="showOtherRequestModal('request1', 'https://via.placeholder.com/250x140', 'ABC Fast Food', '123 Main St', '3.5 km', '10:00 AM - 12:00 PM', 'Delivery to 456 Kindness Ave')">
+                <img src="https://via.placeholder.com/250x140" alt="Food Image" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">ABC Fast Food</h3>
+                    <p class="card-summary">
+                        <strong>Pickup:</strong> 123 Main St<br>
+                        <strong>Distance:</strong> 3.5 km
+                    </p>
+                </div>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="card" onclick="showOtherRequestModal('request2', 'https://via.placeholder.com/250x140', 'Burger Town', '456 Foodie Lane', '5.2 km', '2:00 PM - 4:00 PM', 'Delivery to 789 Hope St')">
+                <img src="https://via.placeholder.com/250x140" alt="Food Image" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Burger Town</h3>
+                    <p class="card-summary">
+                        <strong>Pickup:</strong> 456 Foodie Lane<br>
+                        <strong>Distance:</strong> 5.2 km
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeRequestModal()">&times;</span>
+                <img id="modal-image" class="modal-image" src="" alt="Request Image">
+                <div class="modal-details">
+                    <h3 id="modal-title"></h3>
+                    <p id="modal-pickup"></p>
+                    <p id="modal-distance"></p>
+                    <p id="modal-time"></p>
+                    <p id="modal-delivery"></p>
+                </div>
+                <button class="accept-btn" onclick="acceptRequest()">Accept Request</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="special-request-section">
+        <h2 class="section-title">Special Requests</h2>
+        <div class="card-container">
+            <!-- Card 1 -->
+            <div class="card" onclick="showSpecialRequestModal('request1', 'fas fa-box', 'Need Help Moving Furniture', '123 Main St', '3 days ago', 'Details about the special request')">
+                <div class="card-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Need Help Moving Furniture</h3>
+                    <p class="card-summary">
+                        <strong>Location:</strong> 123 Main St<br>
+                        <strong>Request:</strong> Help moving furniture<br>
+                        <strong>Requested:</strong> 3 days ago
+                    </p>
+                </div>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="card" onclick="showSpecialRequestModal('request2', 'fas fa-concierge-bell', 'Looking for a Personal Chef', '456 Foodie Lane', '1 day ago', 'Details about the special request')">
+                <div class="card-icon">
+                    <i class="fas fa-concierge-bell"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Looking for a Personal Chef</h3>
+                    <p class="card-summary">
+                        <strong>Location:</strong> 456 Foodie Lane<br>
+                        <strong>Request:</strong> Personal chef services<br>
+                        <strong>Requested:</strong> 1 day ago
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Special Request Modal -->
+        <div id="special-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeSpecialModal()">&times;</span>
+                <div class="modal-header">
+                    <i id="modal-icon" class="modal-icon"></i>
+                    <h3 id="modal-title"></h3>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-location"><strong>Location:</strong></p>
+                    <p id="modal-request"><strong>Details/Description:</strong></p>
+                    <p id="modal-time"><strong>Requested:</strong></p>
+                </div>
+                <button class="accept-btn" onclick="acceptSpecialRequest()">Accept Request</button>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://kit.fontawesome.com/229dff7a33.js" crossorigin="anonymous"></script>
+    <script src="../volunteerHome/volunteerHome.js"></script>
+</body>
+</html>
