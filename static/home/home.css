@@ -1,0 +1,263 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    width: 100%;
+    padding: 1rem;
+    background-color: #fff;
+}
+
+.top-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0.5rem 0;
+}
+
+.title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #8c8c8c;
+}
+
+.location-dropdown {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.location-dropdown i {
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.location-dropdown select {
+    padding: 0.4rem;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    background: none;
+}
+
+.bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    gap: 1rem;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    flex-grow: 1;
+}
+
+.searchBar i {
+    color: #333;
+}
+
+.searchBar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.notification:hover {
+    background-color: #d1d3d4;
+}
+
+.notification i {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Categories Section Styling */
+.categories {
+    padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.categoriesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.sectionHeader{
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.viewAll {
+    padding: 0.5rem 1rem;
+    background-color: #6E966F;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.viewAll:hover {
+    background-color: #5a7c58;
+}
+
+.categoriesContent {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem; /* Adds spacing between the cards */
+    overflow: hidden; /* Prevents overflow */
+    flex-wrap: nowrap; /* Keeps the cards in a single row */
+}
+
+.categoryContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%; /* Ensures 5 cards can fit in one row on larger screens */
+}
+
+.circularCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Takes the full width of the parent container */
+    aspect-ratio: 1 / 1; /* Ensures the card remains a perfect square (and thus a circle with border-radius) */
+    background-color: #fff;
+    border-radius: 50%; /* Makes the cards circular */
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.circularCard i {
+    font-size: 2rem; /* Adjust the icon size */
+    color: #333;
+}
+
+.categoryContainer p {
+    margin-top: 0.5rem; /* Adds spacing between the card and text */
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+}
+
+.circularCard:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Scaling */
+@media (max-width: 1024px) {
+    .categoryContainer {
+        width: 25%; /* Adjusts width to fit fewer cards in one row */
+    }
+}
+
+@media (max-width: 768px) {
+    .categoryContainer {
+        width: 30%; /* Fits 3 cards in one row */
+    }
+}
+
+@media (max-width: 480px) {
+    .categoryContainer {
+        width: 45%; /* Fits 2 cards in one row */
+    }
+}
+
+
+.nearbyFoods {
+    padding: 20px;
+}
+
+.nearbyFoodsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.foodCardsContainer {
+    display: flex;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    gap: 16px; /* Space between cards */
+    padding-bottom: 10px; /* Space for scroll bar if visible */
+    scroll-behavior: smooth; /* Smooth scrolling experience */
+}
+
+.foodCard {
+    flex: 0 0 calc(80% - 16px); /* Card width slightly smaller than the screen width */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.foodCard img {
+    width: 100%;
+    height: 150px; /* Fixed height for consistent card size */
+    object-fit: cover;
+}
+
+.foodCardContent {
+    padding: 16px;
+}
+
+.foodCardContent h2 {
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Hide horizontal scrollbar for aesthetic */
+.foodCardsContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.foodCardsContainer {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}

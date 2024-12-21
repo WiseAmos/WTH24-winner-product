@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../home/home.css">
+    <title>Home</title>
+</head>
+<body>
+    <div class="header">
+        <div class="top-bar">
+            <div class="title">Location</div>
+            <div class="location-dropdown">
+                <i class="fa-solid fa-location-dot"></i>
+                <select>
+                    <option value="current">Current Location</option>
+                    <option value="city1">City 1</option>
+                    <option value="city2">City 2</option>
+                </select>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <form class="searchBar" action="/search" method="GET">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" name="query" placeholder="Search..." aria-label="Search">
+            </form>
+            <div class="notification">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+        </div>
+    </div>
+    <div class="categories">
+        <div class="categoriesHeader">
+            <p class="sectionHeader">Categories</p>
+            <button class="viewAll">View All</button>
+        </div>
+        <div class="categoriesContent">
+            <div class="categoryContainer">
+                <div class="circularCard">
+                    <i class="fa-solid fa-bowl-food"></i>
+                </div>
+                <p>Food</p>
+            </div>
+            <div class="categoryContainer">
+                <div class="circularCard">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+                <p>Clothes</p>
+            </div>
+            <div class="categoryContainer">
+                <div class="circularCard">
+                    <i class="fa-solid fa-person-shelter"></i>
+                </div>
+                <p>Shelter</p>
+            </div>
+            <div class="categoryContainer">
+                <div class="circularCard">
+                    <i class="fa-solid fa-notes-medical"></i>
+                </div>
+                <p>Health</p>
+            </div>
+        </div>
+    </div>
+    <div class="nearbyFoods">
+        <div class="nearbyFoodsHeader">
+            <p class="sectionHeader">Extra Food Nearby</p>
+            <button class="viewAll">View All</button>
+        </div>
+        <div class="foodCardsContainer">
+            <div class="foodCard">
+                <img src="https://offerengine.theentertainerme.com/dunkin-donuts---singapore-x096491/merchant_profile_%22hero%22_image_%28retina%29202409161711.jpg" alt="Food Image">
+                <div class="foodCardContent">
+                    <h2>Extra Dunkin Donuts!!!</h2>
+                    <div class="info">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Eunos MRT</p>
+                    </div>
+                    <div class="info">
+                        <i class="fa-solid fa-house-medical-flag"></i>
+                        <p>The Willing Hearts</p>
+                    </div>
+                </div>
+            </div>
+            <div class="foodCard">
+                <img src="https://static.toiimg.com/thumb/81673781.cms?resizemode=4&width=1200" alt="food">
+                <div class="foodCardContent">
+                    <h2>Leftover Bread from BreadTalk!!!</h2>
+                    <div class="info">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Somewhere over the rainbow</p>
+                    </div>
+                    <div class="info">
+                        <i class="fa-solid fa-house-medical-flag"></i>
+                        <p>The Heavens</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more food cards as needed -->
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/229dff7a33.js" crossorigin="anonymous"></script>
+</body>
+</html>
