@@ -22,33 +22,23 @@ function acceptRequest() {
     closeRequestModal();
 }
 
-// Show Special Request Modal
-function showSpecialRequestModal(requestId, iconClass, title, location, requestTime, postDate, contactInfo, description) {
-    // Set modal content for special request
-    document.getElementById('special-modal').style.display = 'flex';
-    document.getElementById('modal-icon').className = iconClass;  // iconClass for special request
-    document.getElementById('modal-title').innerText = title;
-    document.getElementById('modal-location').innerText = `Location: ${location}`;
-    document.getElementById('modal-request').innerText = `Request: ${title}`;
-    document.getElementById('modal-time').innerText = `Requested: ${requestTime}`;
+function showSpecialRequestModal(id, icon, title, location, time, description) {
+    // Set the modal content dynamically
+    document.getElementById("modal-icon").className = icon;
+    document.getElementById("modal-title").textContent = title;
+    document.getElementById("modal-location").textContent = "Location: " + location;
+    document.getElementById("modal-request").textContent = "Details/Description: " + description;
+    document.getElementById("modal-time").textContent = "Requested: " + time;
     
-    // Added new fields for post date and requested time
-    document.getElementById('modal-post-date').innerText = `Posted on: ${postDate}`;
-    document.getElementById('modal-request-time').innerText = `Request Needed By: ${requestTime}`;
-    
-    // Additional details for special request
-    document.getElementById('modal-contact').innerText = `Contact Info: ${contactInfo}`;
-    document.getElementById('modal-description').innerText = `Description: ${description}`;
+    // Show the modal
+    document.getElementById("special-modal").style.display = "block";
 }
 
-// Close Special Request Modal
 function closeSpecialModal() {
-    const modal = document.getElementById('special-modal');
-    modal.style.display = 'none';
+    document.getElementById("special-modal").style.display = "none";
 }
 
-// Accept Special Request
 function acceptSpecialRequest() {
-    alert('Special request accepted!');
+    alert("Request accepted!");
     closeSpecialModal();
 }
