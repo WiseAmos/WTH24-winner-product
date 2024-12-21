@@ -1,3 +1,4 @@
+const { totalmem } = require("os");
 const { db } = require("../firebase.js");
 const { ref, set } = require("firebase/database");
 
@@ -66,7 +67,8 @@ const populateDatabase = async () => {
           title: "Extra Dunkin' Donuts!!!",
           date: "22 December 2024",
           description: "We have leftover donuts that will expire tonight. Available for pickup from 8 PM to 10 PM.",
-          quantityLeft: 10,
+          quantityLeft: 5,
+          totalQuantity: 10,
           time: "2000 - 2200",
           location: "123 Charity Lane, City A",
           timestamp: new Date().toISOString()
@@ -78,7 +80,8 @@ const populateDatabase = async () => {
             title: "Free Bread and Pastries from BreadTalk!",
             date: "22 December 2024",
             description: "We have 30 excess bread and pastries that need to be given away. Please visit before closing at 9 PM.",
-            quantityLeft: 30,
+            quantityLeft: 20,
+            totalQuantity: 30,  
             time: "Before 2100",
             location: "789 Market Street, City C",
             timestamp: new Date().toISOString()
@@ -92,6 +95,7 @@ const populateDatabase = async () => {
             title: "Free Clothes for All!",
             description: "We have a variety of clothes available for free distribution. Come and pick your favorites!",
             quantityLeft: 5,
+            totalQuantity: 10,
             date: "23 December 2024",
             time: "1000 - 1800",
             location: "Sengkang Drive Block 123, #01-01, Singapore 123456",
@@ -102,7 +106,8 @@ const populateDatabase = async () => {
             image: "https://th.bing.com/th/id/OIP.Yq3fgpjpo3oMbQQMoK7orAHaEK?w=750&h=422&rs=1&pid=ImgDetMain",
             title: "Giving out free clothes for Christmas!",
             description: "We have a variety of clothes available for free distribution. Merry Christmas, hohoho. Come and pick your favorites!",
-            quantityLeft: 20,
+            quantityLeft: 20, 
+            totalQuantity: 30,
             date: "24 December 2024",
             time: "1500 - 2000",
             location: "456 Donation Drive, City B, Singapore 123456",
@@ -110,18 +115,46 @@ const populateDatabase = async () => {
           }
         }
       },
-      requests: {
-        request1: {
+      specialRequests: { // can be created through a form that they input and submit.
+        1: {
           createdBy: "john_doe_account", // Updated to reference the unique account_name
           type: "transport",
           details: "Need a volunteer to help me reach the healthcare center for a checkup.",
+          date: "26 December 2024",
+          time: "0900 - 1000",
+          location: "123 Main Street, City",
           status: "pending", // Can be "pending", "in-progress", or "completed"
           timestamp: new Date().toISOString()
         },
-        request2: {
+        2: {
           createdBy: "john_doe_account", // Updated to reference the unique account_name
           type: "furniture",
           details: "Need help moving a heavy table to another room.",
+          date: "27 December 2024",
+          time: "0000 - 2359",
+          location: "123 Main Street, City",
+          status: "pending",
+          timestamp: new Date().toISOString()
+        }
+      },
+      foodRequests: { // created when "I want this one!" is clicked, automatic.
+        1: {
+          createdBy: "john_doe_account", // Updated to reference the unique account_name
+          details: "Need help collecting food please!",
+          foodID: 1, // Updated to reference the unique food announcement ID
+          date: new Date().toISOString(), // as of the time they submit the request to get the food
+          time: new Date().toLocaleTimeString(), // as of the time they submit the request to get the food
+          location: "123 Main Street, City",
+          status: "pending", // Can be "pending", "in-progress", or "completed"
+          timestamp: new Date().toISOString()
+        },
+        2: {
+          createdBy: "john_doe_account", // Updated to reference the unique account_name
+          details: "Need help collecting food please!",
+          foodID: 2, 
+          date: new Date().toISOString(), // as of the time they submit the request to get the food
+          time: new Date().toLocaleTimeString(), // as of the time they submit the request to get the food
+          location: "123 Main Street, City",
           status: "pending",
           timestamp: new Date().toISOString()
         }
