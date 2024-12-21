@@ -31,7 +31,9 @@ app.get('/data', async(req, res)=>{
 const dbRef = ref(getDatabase());
 get(child(dbRef,req["query"]["path"])).then((snapshot) => {
   if (snapshot.exists()) {
-    res.send(snapshot.val());
+    const data = snapshot.val();
+    const filteredData = Object.values(data).filter(item => item !== null); 
+    res.send(filteredData);
   } else {
     console.log("No data available");
   }
@@ -54,14 +56,6 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 //       console.error(error.message);
 //     }
 //   }
-
-//   getData()
-
-app.post('/data',async(req, res) => {
-    console.log(req);
-    // const ref = ref(db, req["param"]);
-    // res.send("")
-})
 
 
 const PORT = process.env.PORT || 3000;
