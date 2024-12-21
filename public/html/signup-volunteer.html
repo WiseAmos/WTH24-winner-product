@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/signup-volunteer.css">
+    <link rel="stylesheet" type="text/css" href="../css/signup-volunteer.css">
+</head>
+<body>
+    <div id="Iphone_Header">
+        <div id="Iphone_Header_Left">
+            <p>9:41</p>
+        </div>
+        <div id="Iphone_Header_Right">
+            <img src="../images/iphone battery.png" alt="iphone battery">
+            <img src="../images/iphone wifi.png" alt="iphone wifi">
+        </div>
+    </div>
+    <div id="signup-text">
+        <h2>Hey there,</h2>
+        <h1>Create an Account</h1>
+    </div>
+    <div class="form-container">
+        <form>
+            <div class="form-group">
+                <img src="../images/Organization.jpg"  id="profile-image">
+                <input type="file" accept="image/*" id="profile-upload" style="display: none;">
+                <label class="upload-button" for="profile-upload">Upload Image</label>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="#">Login</a>
+        </div>
+    </div>
+
+    <script src = "../js/signup-volunteer.js">
+    </script>
+</body>
+</html>

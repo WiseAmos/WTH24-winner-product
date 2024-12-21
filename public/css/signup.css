@@ -1,0 +1,82 @@
+#Iphone_Header {
+    width: 100vw;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#Iphone_Header_Left {
+    margin-left: 50px;
+}
+
+#Iphone_Header_Right {
+    margin-right: 50px;
+    display: flex;
+    gap: 10px;
+}
+
+#Iphone_Header img, p {
+    font-family: 'Poppins', serif;
+    height: 30px;
+    font-size: 25px;
+}
+
+#signup-text{
+    font-family: 'Poppins', serif;
+    width: 100vw;
+    text-align: center;
+    margin-top: 150px;
+    
+}
+#signup-text h2{
+    font-weight: normal;
+    font-size: 40px;
+    margin-bottom: 0;
+}
+#signup-text h1{
+    margin-top: 10px;
+    font-size: 45px;
+}
+
+#options{
+    width: 100vw;
+    flex-wrap: wrap;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top:300px;
+}
+
+.option{
+    width: 45vw;
+    display: flex;
+    
+    background-color:rgb(151, 228, 228);
+   
+    border: 3px solid black;
+    border-radius: 20px;
+    height: 400px;
+}
+
+.option-container p{
+    font-size: 30px;
+    padding-left: 15px;
+    margin-top: 20px;
+    text-align: center;
+    
+}
+
+.option-image{
+    width: 100%;
+    object-fit: cover;
+    height: 260px;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 0;
+   
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

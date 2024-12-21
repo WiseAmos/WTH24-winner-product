@@ -1,6 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
+const { db } = require("./firebase.js");
+const { ref, set } = require("firebase/database");
 
 const app = express();
 // const staticMiddleware = express.static("./static"); // Path to the public folder
@@ -30,3 +32,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}/`);
 });
+
+
