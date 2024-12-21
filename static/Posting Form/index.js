@@ -4,8 +4,14 @@ console.log(food)
 document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
     console.log(button)
+    document.getElementById("image-banner").src = food["image"]
+    document.getElementById("title").innerText = food["title"]
+    document.getElementById("about").innerText = food["description"]
+    document.getElementById("date").innerText = food["date"]
+    document.getElementById("time").innerText = food["time"]
+    console.log(getData("announcements"))
     button.addEventListener("click",()=>{
-        
+        postData("annoucements\\"+food["createdBy"],)
     })
 })
 // Function to update progress bar with keyframes
@@ -86,8 +92,3 @@ function updateProgress(current, total) {
     }
   }
 
-
-
-  food[""]
-
-  getData("users")

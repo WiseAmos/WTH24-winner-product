@@ -8,6 +8,7 @@ import { update,set,push, getDatabase, ref, child, get } from "firebase/database
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
@@ -23,6 +24,13 @@ app.get("/home", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/home/home.html"));
 });
 
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup.html'));
+});
+app.get('/signup/signup-volunteer', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup-volunteer.html'));
+});
+
 app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
@@ -34,8 +42,15 @@ app.get('/data', async (req, res) => {
         if (snapshot.exists()) {
             const data = snapshot.val();
             // Directly return the raw data from the snapshot
-            const filteredData = Object.values(data).filter(item => item !== null);
-            res.json(filteredData);
+            const filteredData = Object.entries(data)
+            .filter(([key, value]) => value !== null)
+            .map(([key, value]) => ({ key, value }));
+            const jsonData = filteredData.reduce((acc, item) => {
+                acc[item.key] = item.value;
+                return acc;
+            }, {});
+
+            res.json(jsonData);
         } else {
           res.status(404).send({ error: "No data available" });
         }
