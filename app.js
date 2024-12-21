@@ -29,7 +29,7 @@ app.get("/foodDetails", async(req, res) => {
 
 app.get('/data', async(req, res)=>{
 const dbRef = ref(getDatabase());
-get(child(dbRef,req["query"]["path"])).then((snapshot) => {
+get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
   if (snapshot.exists()) {
     res.send(snapshot.val());
   } else {
@@ -62,17 +62,13 @@ app.post('/data', async (req, res) => {
       const received = req.body;
       console.log("Path:", received["path"]);
       console.log("Data:", received["data"]);
-<<<<<<< HEAD
   
-=======
-      
->>>>>>> 23c76172bc972c941e90294fafba4aaaf7554dd8
       const usersRef = ref(db, "data/" + received["path"]);
       const newKey = push(usersRef).key;
   
       const updateData = {};
       updateData[newKey] = received["data"];
-      await update(usersRef, updateData);
+      await update(usersRef, received["data"]);
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
       res.status(200).send({ success: true });
