@@ -1,4 +1,7 @@
-
+document.addEventListener("DOMContentLoaded",()=>{
+    const button = document.getElementById("sign-up")
+    console.log(button)
+})
 
 // Function to update progress bar with keyframes
 function updateProgress(current, total) {
@@ -40,7 +43,7 @@ function updateProgress(current, total) {
   async function getData() {
     const url = "/data";
     try {
-      const response = await fetch(url+"?path=data");
+      const response = await fetch(url+"?path=");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -65,7 +68,7 @@ function updateProgress(current, total) {
           data: {volunteer1:{
             role: "volunteer",
             image: "https://example.com/image.jpg",
-            name: "Ian douglas",
+            name: "IAN IS A FAT DONKEY",
             dob: "2006-06-15",
             email: "charlie.brown@example.com",
             phone: "+3344556677",
@@ -86,3 +89,5 @@ function updateProgress(current, total) {
       console.error(error.message);
     }
   }
+
+  postData()

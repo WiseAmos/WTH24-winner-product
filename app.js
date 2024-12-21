@@ -36,7 +36,7 @@ app.get("/foodDetails", async(req, res) => {
 
 app.get('/data', async(req, res)=>{
 const dbRef = ref(getDatabase());
-get(child(dbRef,req["query"]["path"])).then((snapshot) => {
+get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
   if (snapshot.exists()) {
     const data = snapshot.val();
     const filteredData = Object.values(data).filter(item => item !== null); 
@@ -79,7 +79,7 @@ app.post('/data', async (req, res) => {
   
       const updateData = {};
       updateData[newKey] = received["data"];
-      await update(usersRef, updateData);
+      await update(usersRef, received["data"]);
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
       res.status(200).send({ success: true });
