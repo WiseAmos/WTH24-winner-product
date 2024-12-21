@@ -64,11 +64,6 @@ app.post('/data', async (req, res) => {
       const received = req.body;
       console.log("Path:", received["path"]);
       console.log("Data:", received["data"]);
-<<<<<<< HEAD
-  
-=======
-      
->>>>>>> 23c76172bc972c941e90294fafba4aaaf7554dd8
       const usersRef = ref(db, "data/" + received["path"]);
       const newKey = push(usersRef).key;
   
