@@ -14,6 +14,10 @@ app.get("/home", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/home/home.html"));
 });
 
+app.get("/foodDetails", async(req, res) => {
+    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
