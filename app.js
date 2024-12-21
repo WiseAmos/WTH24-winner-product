@@ -9,11 +9,16 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
 
+app.use(express.static(path.join(__dirname, '/public')));
+
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
 });
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/html/signup.html'));
+});
+app.get('/signup/signup-volunteer', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup-volunteer.html'));
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
