@@ -283,6 +283,7 @@ body {
 }
 
 .clothingCardContainer {
+    position: relative; /* Make the card container a positioning context */
     flex: 1 1 calc(45% - 20px); /* Adjust width to fit two items per row with spacing */
     max-width: 220px; /* Prevent cards from stretching too wide */
     background-color: #fff;
@@ -334,4 +335,21 @@ body {
 
 .fa-heart:hover {
     color: #ff4d4d;
+}
+
+/* Heart Icon at the Top-Right Corner */
+.clothingCardContainer .fa-heart {
+    position: absolute;
+    top: 8px; /* Space from the top edge */
+    right: 8px; /* Space from the right edge */
+    font-size: 1.5rem; /* Slightly larger size */
+    color: #fff;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    z-index: 10; /* Ensure it stays above the image */
+}
+
+.clothingCardContainer .fa-heart:hover {
+    color: #ff4d4d;
+    transform: scale(1.2); /* Add a subtle hover effect */
 }
