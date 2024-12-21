@@ -41,9 +41,27 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 });
 })
 
+// async function getData() {
+//     const url = "/data";
+//     try {
+//       const response = await fetch(url+"?path=users");
+//       if (!response.ok) {
+//         throw new Error(`Response status: ${response.status}`);
+//       }
+  
+//       const json = await response.json();
+//       console.log(json);
+//     } catch (error) {
+//       console.error(error.message);
+//     }
+//   }
+
+//   getData()
 
 app.post('/data',async(req, res) => {
-    res.send("")
+    console.log(req);
+    // const ref = ref(db, req["param"]);
+    // res.send("")
 })
 
 
