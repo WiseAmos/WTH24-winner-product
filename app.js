@@ -12,7 +12,9 @@ app.use(express.static(path.join(__dirname, '/static')));
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
 });
-
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup.html'));
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
@@ -31,7 +33,9 @@ app.get('/data', async(req, res)=>{
 const dbRef = ref(getDatabase());
 get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
   if (snapshot.exists()) {
-    res.send(snapshot.val());
+    const data = snapshot.val();
+    const filteredData = Object.values(data).filter(item => item !== null); 
+    res.send(filteredData);
   } else {
     console.log("No data available");
   }
@@ -39,6 +43,8 @@ get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
   console.error(error);
 });
 })
+
+
 
 //EXAMPLE
 // async function getData() {
