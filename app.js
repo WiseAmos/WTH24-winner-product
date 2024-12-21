@@ -9,10 +9,17 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
 
+app.use(express.static(path.join(__dirname, '/public')));
+
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
 });
-
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup.html'));
+});
+app.get('/signup/signup-volunteer', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/html/signup-volunteer.html'));
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
@@ -29,7 +36,7 @@ app.get("/foodDetails", async(req, res) => {
 
 app.get('/data', async(req, res)=>{
 const dbRef = ref(getDatabase());
-get(child(dbRef,req["query"]["path"])).then((snapshot) => {
+get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
   if (snapshot.exists()) {
     const data = snapshot.val();
     const filteredData = Object.values(data).filter(item => item !== null); 
@@ -41,6 +48,8 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
   console.error(error);
 });
 })
+
+
 
 //EXAMPLE
 // async function getData() {
@@ -64,12 +73,13 @@ app.post('/data', async (req, res) => {
       const received = req.body;
       console.log("Path:", received["path"]);
       console.log("Data:", received["data"]);
+  
       const usersRef = ref(db, "data/" + received["path"]);
       const newKey = push(usersRef).key;
   
       const updateData = {};
       updateData[newKey] = received["data"];
-      await update(usersRef, updateData);
+      await update(usersRef, received["data"]);
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
       res.status(200).send({ success: true });
