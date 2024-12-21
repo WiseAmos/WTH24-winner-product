@@ -40,7 +40,7 @@ function updateProgress(current, total) {
   async function getData() {
     const url = "/data";
     try {
-      const response = await fetch(url+"?path=users");
+      const response = await fetch(url+"?path=data");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -53,3 +53,36 @@ function updateProgress(current, total) {
   }
 
   getData()
+
+
+  async function postData() {
+    const url = "/data";
+    try {
+      const response = await fetch("/data", {
+        method: "POST",
+        body: JSON.stringify({
+          path:"users",
+          data: {volunteer1:{
+            role: "volunteer",
+            image: "https://example.com/image.jpg",
+            name: "Ian douglas",
+            dob: "2006-06-15",
+            email: "charlie.brown@example.com",
+            phone: "+3344556677",
+            password: "volunteerpassword123"
+          }}
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }

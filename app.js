@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from 'path';
 const { db } = require("./firebase.js");
-import { getDatabase, ref, child, get } from "firebase/database";
+import { update,set,push, getDatabase, ref, child, get } from "firebase/database";
 
 
 const app = express();
@@ -40,10 +40,11 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 });
 })
 
+//EXAMPLE
 // async function getData() {
 //     const url = "/data";
 //     try {
-//       const response = await fetch(url+"?path=users");
+//       const response = await fetch(url+"?path=   ");
 //       if (!response.ok) {
 //         throw new Error(`Response status: ${response.status}`);
 //       }
@@ -56,14 +57,83 @@ get(child(dbRef,req["query"]["path"])).then((snapshot) => {
 //   }
 
 //   getData()
+app.post('/data', async (req, res) => {
+    try {
+      const received = req.body;
+      console.log("Path:", received["path"]);
+      console.log("Data:", received["data"]);
+<<<<<<< HEAD
+  
+=======
+      
+>>>>>>> 23c76172bc972c941e90294fafba4aaaf7554dd8
+      const usersRef = ref(db, "data/" + received["path"]);
+      const newKey = push(usersRef).key;
+  
+      const updateData = {};
+      updateData[newKey] = received["data"];
+      await update(usersRef, updateData);
+  
+      console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
+      res.status(200).send({ success: true });
+    } catch (error) {
+      console.error("Error updating :( -> ", error.message);
+      res.status(500).send({ success: false, error: error.message });
+    }
+  });
 
-app.post('/data',async(req, res) => {
-    console.log(req);
-    // const ref = ref(db, req["param"]);
-    // res.send("")
-})
+//EXAMPLE
+//   async function postData() {
+//     const url = "/data";
+//     try {
+//       const response = await fetch("/data", {
+//         method: "POST",
+//         body: JSON.stringify({
+//           path:"users",
+//           data: {volunteer1:{
+//             role: "volunteer",
+//             image: "https://example.com/image.jpg",
+//             name: "Ian douglas",
+//             dob: "2006-06-15",
+//             email: "charlie.brown@example.com",
+//             phone: "+3344556677",
+//             password: "volunteerpassword123"
+//           }}
+//         }),
+//         headers: {
+//           "Content-type": "application/json; charset=UTF-8"
+//         }
+//       });
+//       if (!response.ok) {
+//         throw new Error(`Response status: ${response.status}`);
+//       }
+  
+//       const json = await response.json();
+//       console.log(json);
+//     } catch (error) {
+//       console.error(error.message);
+//     }
+//   }
+
+//   postData()
 
 
+  app.get('/nukedatabase', async (req, res) => {
+    try {
+      // Reference to the root of the database
+      const rootRef = ref(db,"data/"+req["query"]["path"]);
+  
+      // Set the root to null to delete all data
+      await set(rootRef, null);
+  
+      console.log("Database successfully nuked!");
+      res.status(200).send({ success: true, message: "Database successfully nuked!" });
+    } catch (error) {
+      console.error("Error nuking database -> ", error.message);
+      res.status(500).send({ success: false, error: error.message });
+    }
+  });
+  
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}/`);
