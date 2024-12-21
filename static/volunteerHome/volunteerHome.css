@@ -1,0 +1,460 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header Styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: 1rem 0 1rem 0;
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+.profile-icon i {
+    font-size: 18px;
+    color: #333;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Notification Icon */
+.notifications i {
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Request Section */
+.request-section {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.4s ease-in-out;
+    position: relative; /* This ensures the close button is positioned relative to this container */
+}
+
+/* Modal Image */
+.modal-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+}
+
+/* Modal Details */
+.modal-details {
+    padding: 20px;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Modal Title */
+.modal-details h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+/* Modal Content Paragraph */
+.modal-details p {
+    margin: 0;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Close Button Styling */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px; /* Set both width and height to ensure a perfect circle */
+    height: 40px;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    background-color: #ff4c4c; /* Red color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* Ensure the button is a circle */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 0; /* Remove padding to ensure consistent size */
+}
+
+.close:hover {
+    background-color: #ff0000; /* Darker red */
+    transform: scale(1.1); /* Slightly enlarge when hovered */
+}
+
+/* Accept Button Styling */
+.accept-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #6E966F;
+    color: white;
+    border: none;
+    border-radius: 0 0 20px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.accept-btn:hover {
+    background-color: #578C5F;
+}
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* Hide scrollbar for horizontal scrolling section */
+.card-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+.card-container::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+/* Card Styling */
+.card {
+    flex: 0 0 auto;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Styling */
+.card-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+/* Content Styling */
+.card-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.card-summary {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+
+/* Special Request Section Styling */
+.special-request-section {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Card Container for Special Requests */
+.card-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.card-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Card Styling for Special Requests */
+.card {
+    flex: 0 0 auto;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Icon Styling */
+.card-icon {
+    width: 100%;
+    height: 100px;
+    background-color: #6E966F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-icon i {
+    font-size: 30px;
+    color: #f0f0f0;
+}
+
+/* Card Content Styling */
+.card-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.card-summary {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Modal for Special Requests */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.4s ease-in-out;
+    position: relative;
+}
+
+/* Modal Icon */
+.modal-icon {
+    font-size: 24px;  /* Matching the card icon size */
+    width: 50px;  /* Circular size of the icon */
+    height: 50px;  /* Circular size of the icon */
+    background-color: #6E966F;  /* Background color for the icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;  /* Circular icon */
+    margin-right: 15px;  /* Space between icon and title */
+}
+
+.modal-icon i {
+    font-size: 30px;  /* Size of the icon */
+    color: #f0f0f0;  /* Icon color */
+}
+
+/* Modal Details */
+.modal-details {
+    padding: 20px;
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Modal Title */
+.modal-details h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+/* Modal Content Paragraph */
+.modal-details p {
+    margin: 0;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Close Button Styling */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    background-color: #ff4c4c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 0;
+}
+
+.close:hover {
+    background-color: #ff0000;
+    transform: scale(1.1);
+}
+
+/* Accept Button Styling */
+.accept-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #6E966F;
+    color: white;
+    border: none;
+    border-radius: 0 0 20px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.accept-btn:hover {
+    background-color: #578C5F;
+}
+
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

@@ -17,6 +17,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
 
+app.get("/volunteerHome", async(req, res) => {
+    res.sendFile(path.join(__dirname + "/static/volunteerHome/volunteerHome.html"));
+});
 
 // Routes for html page
 app.get("/home", async(req, res) => {

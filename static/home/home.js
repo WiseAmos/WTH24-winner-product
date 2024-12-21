@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(foodApiUrl);
             const data = await response.json();
+            let count = 0;
 
             // Check if the data is an array
             if (Array.isArray(data)) {
@@ -22,6 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Loop through the data and dynamically create food cards
                 data.forEach(foodItem => {
+                    count += 1;
+                    foodItem.type = 'food'; // Add a type property to the food item
+                    foodItem.id = count;
                     const dupFoodItem = foodItem;
                     const { location, store, title, image } = dupFoodItem;
 
@@ -86,8 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
             // Clear the content container before appending new items
             contentContainer.innerHTML = '';
 
+            let count = 0;
+
             // Loop through the fetched data and create clothing cards dynamically
             data.forEach(item => {
+                count += 1;
+                item.type = 'clothes';
+                item.id = count;
                 const clothingCard = document.createElement('div');
                 clothingCard.classList.add('clothingCardContainer');
 
