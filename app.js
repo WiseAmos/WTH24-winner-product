@@ -1,5 +1,5 @@
 import express from "express";
-import bodyParser from "body-parser";
+import bodyParser, { json } from "body-parser";
 import path from 'path';
 const { db } = require("./firebase.js");
 import { update,set,push, getDatabase, ref, child, get } from "firebase/database";
@@ -144,7 +144,67 @@ app.post('/data', async (req, res) => {
 
 
   app.get('/recomendations', async (req, res) => {
-    res.send({"dude":"chill"})
+    const username = req.query.user.split("?")[0]
+    const action = req.query.user.split("?")[1]
+    const otherinfo = await fetch("http://localhost:3000/data?path=announcements")
+    const otherinforejson = await otherinfo.json()
+    const reponsestring =  JSON.stringify(otherinforejson)
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+    const genAI = new GoogleGenerativeAI("AIzaSyCXb4dtQZq2uk5IHv-cZ75dmniMBMNwCJw");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `"base on this user `+username+` and also on other relevant information regarding the organisation
+    and volunteers and food places return in a json format on whether if this person needs a volueenter and  which organisation
+    voluenteer and food stall may be able to help this person. The plan may consists of using more then an organisation volunteer
+    and food place to help this person or it could use non as well. This user also happen to choose event with the title `+action+` hence please provide the according information for voluenteer_data base on the selected event. For exmaple if they choose Giving out free clothes for Christmas! 
+    use the data 
+    {
+      "createdBy": "helping_hands_account",
+      "date": "24 December 2024",
+      "description": "We have a variety of clothes available for free distribution. Merry Christmas, hohoho. Come and pick your favorites!",
+      "image": "https://th.bing.com/th/id/OIP.Yq3fgpjpo3oMbQQMoK7orAHaEK?w=750&h=422&rs=1&pid=ImgDetMain",
+      "location": "456 Donation Drive, City B, Singapore 123456",
+      "quantityLeft": 20,
+      "time": "1500 - 2000",
+      "timestamp": "2024-12-21T14:04:02.430Z",
+      "title": "Giving out free clothes for Christmas!",
+      "totalQuantity": 30
+    }
+    Please return it in the below format when submitting a reqest for needing voluenteering assitance. Take note to only return what it in the format strictly.
+    START FORMAT
+    {
+    need_help: true
+    voluenteer_data: {
+      "createdBy": "john_doe_account",
+      "date": "2024-12-21T14:04:02.446Z",
+      "details": "Need help collecting food please!",
+      "foodID": 2,
+      "location": "123 Main Street, City",
+      "status": "pending",
+      "time": "10:04:02 pm",
+      "timestamp": "2024-12-21T14:04:02.446Z"
+    }
+    recomendations: 
+    {
+    recomended:[{
+    type: clothes
+    id : 2
+    title : "Free clothes for all"
+  }]
+    }
+  }
+  END FORMAT
+  This are the other releveant information -> `+reponsestring; 
+    const result = await model.generateContent(prompt);
+    const json_result_promt = JSON.parse(result.response.text().substring(7,result.response.text().length-4));
+      const reqest = await fetch("http://localhost:3000/data?path=foodRequests")
+      const requests_id_clean = await reqest.json()
+      const id = Object.keys(requests_id_clean).length+1
+      if (json_result_promt["need_help"]){  
+        console.log(id)
+        const data = {"path":"foodRequests/"+id,"important_data":json_result_promt["voluenteer_data"]}
+        console.log(data)
+        res.json(data)
+      }
   });
   
 const PORT = process.env.PORT || 3000;
