@@ -1,5 +1,7 @@
 
 const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+sessionStorage.setItem("clicked",true)
+const food_identifier = 2
 console.log(food)
 document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
@@ -7,15 +9,18 @@ document.addEventListener("DOMContentLoaded",()=>{
     document.getElementById("image-banner").src = food["image"]
     document.getElementById("title").innerText = food["title"]
     document.getElementById("about").innerText = food["description"]
+    document.getElementById("location").innerText = food["location"]
     document.getElementById("date").innerText = food["date"]
     document.getElementById("time").innerText = food["time"]
-    console.log(getData("announcements"))
+    setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"]),food["totalQuantity"]), 10);
     button.addEventListener("click",()=>{
-<<<<<<< HEAD
-        postData("data/food","" )
-=======
-        postData("annoucements\\"+food["createdBy"],)
->>>>>>> 678fe3e1d420908c57f2a1231e90d6df7daf4b92
+      if(sessionStorage.getItem("clicked")=="true"){
+        console.log("CLICKED")
+        const newQuantityLeft = food["quantityLeft"] - 1;
+        postData("announcements/food/" + food_identifier, { quantityLeft: newQuantityLeft });
+        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])-1,food["totalQuantity"]), 10);
+        sessionStorage.setItem("clicked",false)
+      }
     })
 })
 // Function to update progress bar with keyframes
@@ -51,8 +56,6 @@ function updateProgress(current, total) {
     progressLabel.textContent = `${current}/${total}`;
   }
   
-  // Example usage: update the progress bar dynamically
-  setTimeout(() => updateProgress(5, 10), 10); // Updates to 8/10 after 1 second
   
 
   async function getData(path) {
@@ -64,16 +67,12 @@ function updateProgress(current, total) {
       }
   
       const json = await response.json();
-      console.log(json);
+      return json;
     } catch (error) {
       console.error(error.message);
     }
   }
 
-<<<<<<< HEAD
-  // getData()
-=======
->>>>>>> 678fe3e1d420908c57f2a1231e90d6df7daf4b92
 
 
   async function postData(path,datainside) {
@@ -99,8 +98,3 @@ function updateProgress(current, total) {
       console.error(error.message);
     }
   }
-
-<<<<<<< HEAD
-  // postData()
-=======
->>>>>>> 678fe3e1d420908c57f2a1231e90d6df7daf4b92
