@@ -12,6 +12,8 @@ const populateDatabase = async () => {
         person1: {
           role: "person_in_need",
           name: "John Doe",
+          account_name: "john_doe_account", // Added account_name
+          password: "person_password123",   // Added password
           dob: "1990-01-01",
           phone: "+1234567890",
           address: "123 Main Street, City",
@@ -22,6 +24,7 @@ const populateDatabase = async () => {
           role: "organization",
           organization_name: "Helping Hands",
           account_name: "helping_hands_account",
+          password: "securepassword123",
           representative: {
             name: "Alice Johnson",
             designation: "Manager",
@@ -29,7 +32,6 @@ const populateDatabase = async () => {
             email: "alice.johnson@example.com",
             phone: "+1122334455"
           },
-          password: "securepassword123",
           addresses: ["123 Charity Lane, City A", "456 Donation Drive, City B"],
           about: "We provide food and shelter for those in need."
         },
@@ -37,6 +39,7 @@ const populateDatabase = async () => {
           role: "food_stall",
           organization_name: "ABC Supermarket",
           account_name: "abc_supermarket",
+          password: "mypassword123",
           representative: {
             name: "Emily Stone",
             designation: "Owner",
@@ -44,18 +47,18 @@ const populateDatabase = async () => {
             email: "emily.stone@example.com",
             phone: "+2233445566"
           },
-          password: "mypassword123",
           about: "We provide fresh produce and groceries.",
           location: "789 Market Street, City C"
         },
         volunteer1: {
           role: "volunteer",
-          image: "https://example.com/image.jpg",
           name: "Charlie Brown",
+          account_name: "charlie_brown_account", // Added account_name
+          password: "volunteerpassword123",      // Added password
+          image: "https://example.com/image.jpg",
           dob: "1992-06-15",
           email: "charlie.brown@example.com",
-          phone: "+3344556677",
-          password: "volunteerpassword123"
+          phone: "+3344556677"
         }
       },
       announcements: {
