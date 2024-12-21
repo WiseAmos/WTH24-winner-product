@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Add click event to navigate to the /clothingDetails page and store the clicked data
                 clothingCard.addEventListener('click', () => {
                     sessionStorage.setItem('clickedClothingItem', JSON.stringify(item));
-                    window.location.href = '/clothingDetails';
+                    window.location.href = '/foodDetails';
                 });
 
                 // Append the clothing card to the content container
