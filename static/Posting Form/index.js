@@ -34,3 +34,28 @@ function updateProgress(current, total) {
   // Example usage: update the progress bar dynamically
   setTimeout(() => updateProgress(5, 10), 10); // Updates to 8/10 after 1 second
   
+
+
+const {initializeApp} = require("firebase/app");
+const {getDatabase} = require("firebase/database");
+
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://firebase.google.com/docs/web/learn-more#config-object
+const firebaseConfig = {
+  // ...
+  // The value of `databaseURL` depends on the location of the database
+  databaseURL: "https://wth24-winner-product-default-rtdb.asia-southeast1.firebasedatabase.app",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+// Initialize Realtime Database and get a reference to the service
+const database = getDatabase(app);
+var starCountRef =database.ref('posts/' + postId + '/starCount');
+starCountRef.on('value', (snapshot) => {
+  const data = snapshot.val();
+  updateStarCount(postElement, data);
+});

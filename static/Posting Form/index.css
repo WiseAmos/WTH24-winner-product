@@ -104,3 +104,93 @@ margin-bottom:7px;
     0% { width: 0; }
     100% { width: 0%; }
   }
+
+
+
+  
+.nearbyFoods {
+  padding: 20px;
+}
+
+.nearbyFoodsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.foodCardsContainer {
+  display: flex;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  gap: 16px; /* Space between cards */
+  padding-bottom: 10px; /* Space for scroll bar if visible */
+  scroll-behavior: smooth; /* Smooth scrolling experience */
+}
+
+.foodCard {
+  flex: 0 0 calc(80% - 16px); /* Card width slightly smaller than the screen width */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.foodCard img {
+  width: 100%;
+  height: 150px; /* Fixed height for consistent card size */
+  object-fit: cover;
+}
+
+.foodCardContent {
+  padding: 16px;
+}
+
+.foodCardContent h2 {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Hide horizontal scrollbar for aesthetic */
+.foodCardsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.foodCardsContainer {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+.sectionHeader{
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.viewAll {
+  padding: 0.5rem 1rem;
+  background-color: #6E966F;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.viewAll:hover {
+  background-color: #5a7c58;
+}
