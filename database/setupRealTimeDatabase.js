@@ -9,21 +9,19 @@ const populateDatabase = async () => {
     // Data to populate the "data" node
     const appData = {
       users: {
-        person1: {
+        john_doe_account: {
           role: "person_in_need",
           name: "John Doe",
-          account_name: "john_doe_account", // Added account_name
-          password: "person_password123",   // Added password
+          password: "person_password123",
           dob: "1990-01-01",
           phone: "+1234567890",
           address: "123 Main Street, City",
           dietary_needs: "Vegetarian",
           mobility_issues: "Yes"
         },
-        organization1: {
+        helping_hands_account: {
           role: "organization",
           organization_name: "Helping Hands",
-          account_name: "helping_hands_account",
           password: "securepassword123",
           representative: {
             name: "Alice Johnson",
@@ -32,13 +30,12 @@ const populateDatabase = async () => {
             email: "alice.johnson@example.com",
             phone: "+1122334455"
           },
-          addresses: ["123 Charity Lane, City A", "456 Donation Drive, City B"],
+          addresses: ["123 Charity Lane, City A, Singapore 123456", "456 Donation Drive, City B, Singapore 123456"],
           about: "We provide food and shelter for those in need."
         },
-        food_stall1: {
+        abc_supermarket: {
           role: "food_stall",
           organization_name: "ABC Supermarket",
-          account_name: "abc_supermarket",
           password: "mypassword123",
           representative: {
             name: "Emily Stone",
@@ -50,58 +47,80 @@ const populateDatabase = async () => {
           about: "We provide fresh produce and groceries.",
           location: "789 Market Street, City C"
         },
-        volunteer1: {
+        charlie_brown_account: {
           role: "volunteer",
           name: "Charlie Brown",
-          account_name: "charlie_brown_account", // Added account_name
-          password: "volunteerpassword123",      // Added password
-          image: "https://example.com/image.jpg",
+          password: "volunteerpassword123",
+          image: "https://static.vecteezy.com/system/resources/previews/002/275/847/original/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg",
           dob: "1992-06-15",
           email: "charlie.brown@example.com",
           phone: "+3344556677"
         }
       },
       announcements: {
-        announcement1: {
-          createdBy: "organization1", // Reference to the organization's ID
-          title: "Excess Food Alert",
-          description: "We have leftover food that will expire tonight. Available for pickup from 7 PM to 10 PM.",
+        food: {
+          1: {
+          createdBy: "helping_hands_account", // Updated to reference the unique account_name
+          image: "https://offerengine.theentertainerme.com/dunkin-donuts---singapore-x096491/merchant_profile_%22hero%22_image_%28retina%29202409161711.jpg",
+          store: "Dunkin' Donuts",
+          title: "Extra Dunkin' Donuts!!!",
+          date: "22 December 2024",
+          description: "We have leftover donuts that will expire tonight. Available for pickup from 8 PM to 10 PM.",
+          quantityLeft: 10,
+          time: "2000 - 2200",
           location: "123 Charity Lane, City A",
           timestamp: new Date().toISOString()
+          },
+          2: {
+            createdBy: "abc_supermarket", // Updated to reference the unique account_name
+            image: "https://static.toiimg.com/thumb/81673781.cms?resizemode=4&width=1200",
+            store: "BreadTalk",
+            title: "Free Bread and Pastries from BreadTalk!",
+            date: "22 December 2024",
+            description: "We have 30 excess bread and pastries that need to be given away. Please visit before closing at 9 PM.",
+            quantityLeft: 30,
+            time: "Before 2100",
+            location: "789 Market Street, City C",
+            timestamp: new Date().toISOString()
+          }
         },
-        announcement2: {
-          createdBy: "food_stall1", // Reference to the food stall's ID
-          title: "Free Bread and Pastries",
-          description: "We have excess bread and pastries that need to be given away. Please visit before closing at 9 PM.",
-          location: "789 Market Street, City C",
-          timestamp: new Date().toISOString()
-        }
-      },
-      posts: {
-        post1: {
-          createdBy: "organization1", // Reference to the organization's ID
-          title: "Excess Rice Donations",
-          description: "We have 20kg of excess rice to give away. Please contact us for pickup details.",
-          timestamp: new Date().toISOString()
-        },
-        post2: {
-          createdBy: "food_stall1", // Reference to the food stall's ID
-          title: "Surplus Vegetables",
-          description: "We have fresh vegetables available for free distribution. Contact us for more details.",
-          timestamp: new Date().toISOString()
+        clothes: {
+          1: {
+            createdBy: "charlie_brown_account", // Updated to reference the unique account_name
+            image: "https://th.bing.com/th/id/OIP.3wNFmT0u9OI6h9jf9YjxyAHaFj?rs=1&pid=ImgDetMain",
+            store: null,
+            title: "Free Clothes for All!",
+            description: "We have a variety of clothes available for free distribution. Come and pick your favorites!",
+            quantityLeft: 5,
+            date: "23 December 2024",
+            time: "1000 - 1800",
+            location: "Sengkang Drive Block 123, #01-01, Singapore 123456",
+            timestamp: new Date().toISOString()
+          },
+          2: {
+            createdBy: "helping_hands_account", // Updated to reference the unique account_name
+            image: "https://th.bing.com/th/id/OIP.Yq3fgpjpo3oMbQQMoK7orAHaEK?w=750&h=422&rs=1&pid=ImgDetMain",
+            title: "Giving out free clothes for Christmas!",
+            description: "We have a variety of clothes available for free distribution. Merry Christmas, hohoho. Come and pick your favorites!",
+            quantityLeft: 20,
+            date: "24 December 2024",
+            time: "1500 - 2000",
+            location: "456 Donation Drive, City B, Singapore 123456",
+            timestamp: new Date().toISOString()
+          }
         }
       },
       requests: {
         request1: {
-          createdBy: "person1", // Reference to the needy person's ID
+          createdBy: "john_doe_account", // Updated to reference the unique account_name
           type: "transport",
           details: "Need a volunteer to help me reach the healthcare center for a checkup.",
           status: "pending", // Can be "pending", "in-progress", or "completed"
           timestamp: new Date().toISOString()
         },
         request2: {
-          createdBy: "person1", // Reference to the needy person's ID
-          type: "furniture_movement",
+          createdBy: "john_doe_account", // Updated to reference the unique account_name
+          type: "furniture",
           details: "Need help moving a heavy table to another room.",
           status: "pending",
           timestamp: new Date().toISOString()
@@ -120,7 +139,6 @@ const populateDatabase = async () => {
 
 // Run the function
 populateDatabase();
-
  
 // To overwrite database instead of updating
 
