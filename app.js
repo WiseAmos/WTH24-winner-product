@@ -63,7 +63,7 @@ app.post('/data', async (req, res) => {
       console.log("Path:", received["path"]);
       console.log("Data:", received["data"]);
   
-      const usersRef = ref(db, received["path"]);
+      const usersRef = ref(db, "data/" + received["path"]);
       const newKey = push(usersRef).key;
   
       const updateData = {};
@@ -117,7 +117,7 @@ app.post('/data', async (req, res) => {
   app.get('/nukedatabase', async (req, res) => {
     try {
       // Reference to the root of the database
-      const rootRef = ref(db);
+      const rootRef = ref(db,"data/"+req["query"]["path"]);
   
       // Set the root to null to delete all data
       await set(rootRef, null);
