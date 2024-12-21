@@ -1,12 +1,23 @@
-const food = sessionStorage.getItem("fooditem")
+
+const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+console.log(food)
 document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
     console.log(button)
+    document.getElementById("image-banner").src = food["image"]
+    document.getElementById("title").innerText = food["title"]
+    document.getElementById("about").innerText = food["description"]
+    document.getElementById("date").innerText = food["date"]
+    document.getElementById("time").innerText = food["time"]
+    console.log(getData("announcements"))
     button.addEventListener("click",()=>{
+<<<<<<< HEAD
         postData("data/food","" )
+=======
+        postData("annoucements\\"+food["createdBy"],)
+>>>>>>> 678fe3e1d420908c57f2a1231e90d6df7daf4b92
     })
 })
-
 // Function to update progress bar with keyframes
 function updateProgress(current, total) {
     const progressValue = document.querySelector('.progress-value');
@@ -45,9 +56,9 @@ function updateProgress(current, total) {
   
 
   async function getData(path) {
-    const url = "/data"+path;
+    const url = "/data";
     try {
-      const response = await fetch(url+"?path=");
+      const response = await fetch(url+"?path="+path);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -59,16 +70,19 @@ function updateProgress(current, total) {
     }
   }
 
+<<<<<<< HEAD
   // getData()
+=======
+>>>>>>> 678fe3e1d420908c57f2a1231e90d6df7daf4b92
 
 
   async function postData(path,datainside) {
-    const url = "/data"+path;
+    const url = "/data";
     try {
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
-          path:"users",
+          path:path,
           data:datainside
         }),
         headers: {
@@ -86,4 +100,7 @@ function updateProgress(current, total) {
     }
   }
 
+<<<<<<< HEAD
   // postData()
+=======
+>>>>>>> 678fe3e1d420908c57f2a1231e90d6df7daf4b92
