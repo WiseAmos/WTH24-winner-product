@@ -9,17 +9,10 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
 
-app.use(express.static(path.join(__dirname, '/public')));
-
 app.get('/announcement', (req, res) => {
     res.sendFile(path.join(__dirname, '/static/post/post.html'));
 });
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/html/signup.html'));
-});
-app.get('/signup/signup-volunteer', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/html/signup-volunteer.html'));
-});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
@@ -31,26 +24,22 @@ app.get("/home", async(req, res) => {
 });
 
 app.get("/foodDetails", async(req, res) => {
-    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
+    res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
-app.get('/data', async (req, res) => {
-    const dbRef = ref(getDatabase());
-  
-    get(child(dbRef, "data/" + req.query.path))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          // Directly return the raw data from the snapshot
-          res.json(snapshot.val());
-        } else {
-          res.status(404).send({ error: "No data available" });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send({ error: "Internal Server Error" });
-      });
-  });
-  
+
+app.get('/data', async(req, res)=>{
+console.log("SUCCESSFULL CALL LOCALLY")
+const dbRef = ref(getDatabase());
+get(child(dbRef,"data/"+req["query"]["path"])).then((snapshot) => {
+  if (snapshot.exists()) {
+    res.send(snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+})
 
 //EXAMPLE
 // async function getData() {
