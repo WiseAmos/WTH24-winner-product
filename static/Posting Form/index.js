@@ -1,12 +1,28 @@
-const food = sessionStorage.getItem("fooditem")
+
+const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+sessionStorage.setItem("clicked",true)
+const food_identifier = 2
+console.log(food)
 document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
     console.log(button)
+    document.getElementById("image-banner").src = food["image"]
+    document.getElementById("title").innerText = food["title"]
+    document.getElementById("about").innerText = food["description"]
+    document.getElementById("location").innerText = food["location"]
+    document.getElementById("date").innerText = food["date"]
+    document.getElementById("time").innerText = food["time"]
+    setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"]),food["totalQuantity"]), 10);
     button.addEventListener("click",()=>{
-        postData("data/food","")
+      if(sessionStorage.getItem("clicked")=="true"){
+        console.log("CLICKED")
+        const newQuantityLeft = food["quantityLeft"] - 1;
+        postData("announcements/food/" + food_identifier, { quantityLeft: newQuantityLeft });
+        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])-1,food["totalQuantity"]), 10);
+        sessionStorage.setItem("clicked",false)
+      }
     })
 })
-
 // Function to update progress bar with keyframes
 function updateProgress(current, total) {
     const progressValue = document.querySelector('.progress-value');
@@ -40,35 +56,32 @@ function updateProgress(current, total) {
     progressLabel.textContent = `${current}/${total}`;
   }
   
-  // Example usage: update the progress bar dynamically
-  setTimeout(() => updateProgress(5, 10), 10); // Updates to 8/10 after 1 second
   
 
   async function getData(path) {
-    const url = "/data"+path;
+    const url = "/data";
     try {
-      const response = await fetch(url+"?path=");
+      const response = await fetch(url+"?path="+path);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
   
       const json = await response.json();
-      console.log(json);
+      return json;
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  getData()
 
 
   async function postData(path,datainside) {
-    const url = "/data"+path;
+    const url = "/data";
     try {
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
-          path:"users",
+          path:path,
           data:datainside
         }),
         headers: {
@@ -85,5 +98,3 @@ function updateProgress(current, total) {
       console.error(error.message);
     }
   }
-
-  postData()
