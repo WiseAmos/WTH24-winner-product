@@ -105,6 +105,12 @@ async function getNearbyLocations(latitude, longitude) {
 
         const data = await response.json();
 
+        console.log("Nearby locations data: ", data);
+        console.log("Data type:", typeof data);
+
+        console.log("Keys in data:", Object.keys(data));
+        console.log("Entries in data:", Object.entries(data));
+
         // if (Array.isArray(data)) {
         //     // Clear any previous content in the container
         //     // foodCardsContainer.innerHTML = '';
@@ -124,35 +130,57 @@ async function getNearbyLocations(latitude, longitude) {
         //         // CalculateDistance(latitude, longitude);
         //     });
         // }
-        if (Array.isArray(data)) {
+        // if (Array.isArray(data)) {
             // Use a for...of loop to process each foodItem sequentially
-            for (const foodItem of data) {
-                console.log(foodItem.location);
 
-                try {
-                    const { lat, lon } = await turnToLonLat(foodItem.location); // Wait for turnToLonLat to finish
+        
+        // 2.0
+        // for (const foodItem of data) {
+        //     console.log(foodItem.location);
 
+        //     try {
+        //         console.log('Processing food item:', foodItem.location);
+        //         const { lat, lon } = await turnToLonLat(foodItem.location); // Wait for turnToLonLat to finish
 
-                    // Distance to show only nearby events
-                    // const distance = await calculateDistance(lat, lon, latitude, longitude); // Wait for distance calculation
+        //         console.log('Latitude:', lat, 'Longitude:', lon);
 
-                    // if (distance <= 1500) {
-                    //     customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
-                    // }
+        //         // Distance to show only nearby events
+        //         const distance = await calculateDistance(lat, lon, latitude, longitude); // Wait for distance calculation
 
-                    // Show all markers
-                    customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
-                    
-                } catch (error) {
-                    console.error(`Error processing food item ${foodItem.location}:`, error.message);
+        //         if (distance <= 100000) {
+        //             customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
+        //         }
+
+        //         // Show all markers
+        //         // customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
+                
+        //     } catch (error) {
+        //         console.error(`Error processing food item ${foodItem.location}:`, error.message);
+        //     }
+        // }
+        // // }
+
+        // if (!response.ok) {
+        // throw new Error(`Response status: ${response.status}`);
+        // }
+    
+        // 3.0
+        if (data && typeof data === 'object') {
+            const dataArray = Object.values(data); // Convert object to array
+            console.log("Converted data array:", dataArray);
+
+            for (const foodItem of dataArray) {
+                console.log("Processing food item:", foodItem.location);
+                const { lat, lon } = await turnToLonLat(foodItem.location);
+                const distance = calculateDistance(lat, lon, latitude, longitude);
+
+                if (distance <= 100000) {
+                    customMarker(foodItem, lat, lon);
                 }
             }
+        } else {
+            console.error("Data is not an object:", data);
         }
-
-        if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-        }
-    
     } 
     catch (error) {
       console.error(error.message);
@@ -283,4 +311,11 @@ function viewMore(eventId) {
     console.log(`View more clicked for event: ${eventId}`);
     // Navigate to a detailed page or display more information
     window.location.href = `/events/${eventId}`;
+}
+
+
+
+// Food Stalls
+function fetchFoodStalls() {
+    
 }
