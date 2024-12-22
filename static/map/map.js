@@ -35,6 +35,8 @@ findMyState()
         loadMap(latitude, longitude);
         // loadMap(1.33473650438665, 103.740093530646);
         getNearbyLocations(latitude, longitude);
+        // Call fetchFoodStalls to fetch data and display markers
+        fetchFoodStalls();
     })
     .catch((error) => {
         console.error(error);
@@ -257,7 +259,7 @@ function customMarker(item, latitude, longitude) {
 
     // Add a custom marker
     const markerElement = document.createElement('div');
-    markerElement.className = 'shelter-marker';
+    markerElement.className = 'food-marker';
 
     const marker = new ol.Overlay({
         position: ol.proj.fromLonLat([longitude, latitude]), // Marker position
@@ -316,7 +318,109 @@ function viewMore(eventId) {
 
 
 
-// Food Stalls
-function fetchFoodStalls() {
-    
+// Fetch Food Stalls
+async function fetchFoodStalls() {
+    try {
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ date: '2024-12-22', weather: 'sunny' }), // Example payload
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log('Food stall predictions:', data.predictions);
+
+            // Read the unique_stalls.csv file
+            const stallsResponse = await fetch('/unique_stalls.csv');   
+            const csvText = await stallsResponse.text();
+            const stallsData = parseCSV(csvText);
+
+            // Loop through predictions and create markers
+            for (const [stall, servings] of Object.entries(data.predictions)) {
+                const stallInfo = stallsData.find(s => s.stall_name === stall);
+                if (stallInfo) {
+                    const latitude = parseFloat(stallInfo.latitude);
+                    const longitude = parseFloat(stallInfo.longitude);
+                    customFoodStallMarker({ stall: stallInfo.stall_name, type: stallInfo.type_of_shop, servings, closingTime: stallInfo.closing_time }, latitude, longitude);
+                }
+            }
+        } else {
+            console.error('Failed to fetch food stall predictions:', data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching food stall data:', error);
+    }
 }
+
+// Utility function to parse CSV data
+function parseCSV(csvText) {
+    const rows = csvText.trim().split('\n');
+    const headers = rows.shift().split(',').map(header => header.trim()); // Clean headers
+
+    return rows.map(row => {
+        const values = row.split(',').map(value => value.trim()); // Clean values
+        return headers.reduce((obj, header, index) => {
+            obj[header] = values[index] || null; // Assign null if value is missing
+            return obj;
+        }, {});
+    });
+}
+
+
+// Custom Marker for Food Stalls
+function customFoodStallMarker(item, latitude, longitude) {
+    console.log('Custom Food Stall Marker:', item);
+
+    // Add a custom marker
+    const markerElement = document.createElement('div');
+    markerElement.className = 'food-stall-marker';
+
+    const marker = new ol.Overlay({
+        position: ol.proj.fromLonLat([longitude, latitude]),
+        positioning: 'center-center',
+        element: markerElement,
+        stopEvent: false
+    });
+
+    map.addOverlay(marker);
+
+    // Create a popup for displaying stall details
+    const popupElement = document.createElement('div');
+    popupElement.className = 'popup';
+    popupElement.innerHTML = `
+        <div class="popup-content">
+            <h3>${item.stall}</h3>
+            <p><strong>Type:</strong> ${item.type}</p>
+            <p><strong>Left-over Servings:</strong> ${item.servings}</p>
+            <p><strong>Closing Time:</strong> ${item.closingTime}00</p>
+        </div>
+    `;
+
+    const popup = new ol.Overlay({
+        element: popupElement,
+        positioning: 'bottom-center',
+        stopEvent: true,
+        autoPan: true,
+        autoPanAnimation: { duration: 250 },
+    });
+
+    // Add click listener to the marker
+    markerElement.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent the map's click handler from firing
+        popup.setPosition(ol.proj.fromLonLat([longitude, latitude]));
+        map.addOverlay(popup);
+    });
+
+    // Add a click listener to the map to hide the popup
+    map.getViewport().addEventListener('click', (event) => {
+        if (popup.getPosition()) {
+            popup.setPosition(undefined); // Hide the popup
+            map.removeOverlay(popup); // Remove the popup from the map
+        }
+    });
+}
+

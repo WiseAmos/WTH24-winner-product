@@ -451,3 +451,22 @@ body {
     background: none;
   }
   
+
+  .icons {
+    display: flex;
+    gap: 10px; /* Space between icons */
+    align-items: center;
+}
+
+.map i,
+.notification i {
+    font-size: 1.5rem; /* Adjust icon size */
+    color: #555; /* Match the color of the notification icon */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.map i:hover,
+.notification i:hover {
+    color: #000; /* Darker color on hover */
+}

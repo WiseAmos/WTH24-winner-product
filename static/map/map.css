@@ -17,11 +17,19 @@ body {
     /*border: 1px solid #ccc; */ /* Optional styling */
 }
 
-.shelter-marker {
+.food-marker {
     background-image: url('../food-removebg-preview.png'); /* Custom marker icon */
     background-size: cover;
     width: 60px;
     height: 60px;
+    border-radius: 50%;
+}
+
+.food-stall-marker {
+    background-image: url('../food-stall-removebg-preview.png'); /* Custom marker icon */
+    background-size: cover;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
 }
 
@@ -69,6 +77,19 @@ min-width: 200px;
 .popup-content button:hover {
     background: #0056b3;
 }
-
+.back{
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+    width: fit-content;
+    top: 80px;
+    padding: 10px;
+    font-weight: bold;
+    position: absolute;
+    margin: 10px;
+    height: fit-content;
+    font-size: 35px;
+    z-index: 5;
+  }
 /* current location */
 /* "https://img.icons8.com/color/48/map-pin.png"  */
