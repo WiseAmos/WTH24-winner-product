@@ -55,7 +55,7 @@ function getInput() {
     console.log('Request Data:', requestData);
 
     // Example: Display a success message
-    alert('Request created successfully!');
+    // alert('Request created successfully!');
 
     return requestData;
 }
@@ -66,7 +66,7 @@ async function postData(requestData) {
     const decodedToken = decodeJWT(token); // Decode the JWT token
 
     if (!decodedToken || !decodedToken.decodedPayload) {
-        alert("Invalid or missing token!");
+        alert("Please Login to Create a Request");
         return;
     }
 
@@ -98,6 +98,7 @@ async function postData(requestData) {
             throw new Error(`Response status: ${response.status}`);
         }
 
+        alert('Request created successfully!');
         const json = await response.json();
         console.log(json);
     } catch (error) {
