@@ -13,7 +13,7 @@ const findMyState = () => {
             timeout: 5000,
             maximumAge: 0,
           };
-          
+
         const success = (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
@@ -101,7 +101,7 @@ async function getNearbyLocations(latitude, longitude) {
 
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements/food");
+        const response = await fetch(url+"?path=announcements/food");
 
         const data = await response.json();
 
@@ -134,14 +134,14 @@ async function getNearbyLocations(latitude, longitude) {
 
 
                     // Distance to show only nearby events
-                    const distance = await calculateDistance(lat, lon, latitude, longitude); // Wait for distance calculation
+                    // const distance = await calculateDistance(lat, lon, latitude, longitude); // Wait for distance calculation
 
-                    if (distance <= 1500) {
-                        customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
-                    }
+                    // if (distance <= 1500) {
+                    //     customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
+                    // }
 
                     // Show all markers
-                    // customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
+                    customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
                     
                 } catch (error) {
                     console.error(`Error processing food item ${foodItem.location}:`, error.message);
@@ -225,6 +225,8 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 
 function customMarker(item, latitude, longitude) {
+    console.log('Custom Marker:', item);
+
     // Add a custom marker
     const markerElement = document.createElement('div');
     markerElement.className = 'shelter-marker';

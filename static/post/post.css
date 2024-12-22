@@ -15,7 +15,6 @@ body {
     margin: auto;
     margin-bottom: 80px;
     background-color: white;
-    border-radius: 16px;
     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     overflow-y: auto;
 }
@@ -24,7 +23,9 @@ body {
     color: white;
     padding: 16px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
+    /* justify-content: space-between; */
     align-items: center;
 }
 .header h1 {
@@ -331,4 +332,22 @@ body {
 
 .viewAll:hover {
     background-color: #5a7c58;
+}
+
+.back {
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    font-weight: bold;
+    top: 35px;
+    left: 35px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
 }

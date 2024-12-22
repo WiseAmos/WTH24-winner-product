@@ -56,7 +56,7 @@
 async function getAnnouncements() {
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements/food");
+        const response = await fetch(url+"?path=announcements/food");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -133,7 +133,7 @@ const postsPerPage = 5;
 async function getPosts() {
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements/clothes");
+        const response = await fetch(url+"?path=announcements/clothes");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
