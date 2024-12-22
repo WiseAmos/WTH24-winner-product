@@ -35,6 +35,8 @@ document.querySelector("form").addEventListener("submit", async function (event)
         about,
         password,
     });
+
+    window.location.href = "/organisation";
 });
 
 async function postFoodStall({ accountName, organizationName, representativeName, designation, dob, email, phone, location, about, password }) {

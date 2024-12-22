@@ -221,19 +221,24 @@ function formatDate(timestamp) {
     return `${year}-${month}-${day}`; // Format as YYYY-MM-DD
 }
 
-
-// Infinite scrolling for posts
-window.addEventListener("scroll", () => {
-    if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200
-    ) {
-        fetchPosts(true); // Load more posts
-    }
-});
-
 document.addEventListener("DOMContentLoaded", () => {
     getAnnouncements();
     getPosts();
+
+    // Get the 'tab' value from the URL
+    const tabValue = new URLSearchParams(window.location.search).get('tab');
+
+    if (tabValue) {
+        // Find the button with the matching data-target attribute
+        const matchingButton = document.querySelector(`.tab[data-target="${tabValue}"]`);
+
+        if (matchingButton) {
+            // Simulate a click on the button
+            matchingButton.click();
+        } else {
+            console.error(`No button found with data-target="${tabValue}"`);
+        }
+    }
 }); 
 
 // Add click event listeners to each tab
