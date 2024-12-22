@@ -11,7 +11,7 @@ const SECRET_KEY = 'your-secret-key';
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '/public')));
 
 
 app.get('/signup', (req,res) => {
@@ -53,6 +53,7 @@ app.get("/home", async(req, res) => {
 app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
+
 app.get('/data', async (req, res) => { 
   const dbRef = ref(getDatabase()); 
  

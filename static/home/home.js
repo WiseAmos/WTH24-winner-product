@@ -133,7 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
                 // Add click event to navigate to the /clothingDetails page and store the clicked data
                 clothingCard.addEventListener('click', () => {
-                    sessionStorage.setItem('clickedClothingItem', JSON.stringify(item));
+                    // Clear previously clicked food items before storing the new data
+                    sessionStorage.removeItem('previouslyClicked');
+
+                    // Store the clicked food item data in sessionStorage under "previouslyClicked"
+                    let previouslyClicked = [];
+                    previouslyClicked.push(item); // Add the clicked food item to the array
+                    console.log(item);
+                    sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+    
                     window.location.href = '/foodDetails';
                 });
     
