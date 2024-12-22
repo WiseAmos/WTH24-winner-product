@@ -483,22 +483,25 @@ app.post('/signup', async (req, res) => {
 
 app.post("/predict", async (req, res) => {
   try {
-    req.body = {
-
-    }
-    // Forward the request data to the Python service
+    // Forward the request data (date and weather) to the Python service
     const response = await axios.post("http://localhost:5001/predict", req.body);
 
-    // Return the prediction result to the user
+    
     res.json({
       success: true,
-      prediction: response.data.prediction,
+      predictions: response.data, 
     });
   } catch (error) {
     console.error("Error calling the Python service:", error.message);
     res.status(500).json({
       success: false,
-      message: "Failed to make prediction.",
+      message: "Failed to make predictions.",
+      error: error.response ? error.response.data : error.message, 
     });
   }
+});
+
+// Serve the unique_stalls.csv file
+app.get('/unique_stalls.csv', (req, res) => {
+  res.sendFile(path.join(__dirname, 'unique_stalls.csv'));
 });

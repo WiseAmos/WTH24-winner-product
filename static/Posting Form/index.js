@@ -1,4 +1,4 @@
-const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))
 sessionStorage.setItem("clicked",true)
 const food_identifier = food["id"]
 console.log(food)
@@ -16,9 +16,16 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(sessionStorage.getItem("clicked")=="true"){
         console.log("CLICKED")
         const newQuantityLeft = food["quantityLeft"] - 1;
+        console.log(food);
+        console.log("announcements/"+food["type"]+"/" + food_identifier)
         postData("announcements/"+food["type"]+"/" + food_identifier, { quantityLeft: newQuantityLeft });
-        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])+1,food["totalQuantity"]), 10);
+        
+        setTimeout(() => updateProgress((food["totalQuantity"]-newQuantityLeft),food["totalQuantity"]), 10);
         sessionStorage.setItem("clicked",false)
+
+        food["quantityLeft"] = newQuantityLeft
+        sessionStorage.setItem("previouslyClicked",JSON.stringify(food))
+
         token = localStorage.getItem("authToken")
         const parts = token.split('.');
         if (parts.length !== 3) {
@@ -150,6 +157,7 @@ function updateProgress(current, total) {
         
             data = temp_data
             console.log(data)
+
             // Check if the data is an array
             if (Array.isArray(data)) {
                 // Save the data in sessionStorage
@@ -158,9 +166,14 @@ function updateProgress(current, total) {
                 // Clear any previous content in the container
                 foodCardsContainer.innerHTML = '';
 
+                let count = 0;
+
                 // Loop through the data and dynamically create food cards
                 data.forEach(foodItem => {
                     const { location, store, title, image } = foodItem;
+                    count += 1;
+                    foodItem.id = count;
+                    foodItem.type = "food"
 
                     // Create a new div for the food card
                     const foodCard = document.createElement('div');
@@ -184,13 +197,10 @@ function updateProgress(current, total) {
 
                     // Add click event to navigate to the /foodDetails page and store the clicked data
                     foodCard.addEventListener('click', () => {
-                        // Store the clicked food item data in sessionStorage under "previouslyClicked"
-                        let previouslyClicked = JSON.parse(sessionStorage.getItem('previouslyClicked')) || [];
-                        previouslyClicked.push(foodItem); // Add the clicked food item to the array
-                        sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+                      sessionStorage.setItem('previouslyClicked', JSON.stringify(foodItem)); // Save it back to sessionStorage
 
-                        // Redirect to the food details page
-                        window.location.href = '/foodDetails';
+                      // Redirect to the food details page
+                      window.location.href = '/foodDetails';
                     });
 
                     // Append the food card to the food cards container

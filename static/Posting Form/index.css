@@ -157,12 +157,12 @@ margin-bottom:7px;
 
 .button-19 {
   appearance: button;
-  background-color: #000000;
+  background-color: #2f6cfa;
   border: solid transparent;
   border-radius: 16px;
   border-width: 0 0 4px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
   font-family: din-round,sans-serif;
@@ -188,7 +188,7 @@ margin-bottom:7px;
 
 .button-19:after {
   background-clip: padding-box;
-  background-color: #272727;
+  background-color: #0073ff;
   border: solid transparent;
   border-radius: 16px;
   border-width: 0 0 4px;

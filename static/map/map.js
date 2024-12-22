@@ -13,7 +13,7 @@ const findMyState = () => {
             timeout: 5000,
             maximumAge: 0,
           };
-          
+
         const success = (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
@@ -35,6 +35,8 @@ findMyState()
         loadMap(latitude, longitude);
         // loadMap(1.33473650438665, 103.740093530646);
         getNearbyLocations(latitude, longitude);
+        // Call fetchFoodStalls to fetch data and display markers
+        fetchFoodStalls();
     })
     .catch((error) => {
         console.error(error);
@@ -101,9 +103,15 @@ async function getNearbyLocations(latitude, longitude) {
 
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements/food");
+        const response = await fetch(url+"?path=announcements/food");
 
         const data = await response.json();
+
+        console.log("Nearby locations data: ", data);
+        console.log("Data type:", typeof data);
+
+        console.log("Keys in data:", Object.keys(data));
+        console.log("Entries in data:", Object.entries(data));
 
         // if (Array.isArray(data)) {
         //     // Clear any previous content in the container
@@ -124,35 +132,57 @@ async function getNearbyLocations(latitude, longitude) {
         //         // CalculateDistance(latitude, longitude);
         //     });
         // }
-        if (Array.isArray(data)) {
+        // if (Array.isArray(data)) {
             // Use a for...of loop to process each foodItem sequentially
-            for (const foodItem of data) {
-                console.log(foodItem.location);
 
-                try {
-                    const { lat, lon } = await turnToLonLat(foodItem.location); // Wait for turnToLonLat to finish
+        
+        // 2.0
+        // for (const foodItem of data) {
+        //     console.log(foodItem.location);
 
+        //     try {
+        //         console.log('Processing food item:', foodItem.location);
+        //         const { lat, lon } = await turnToLonLat(foodItem.location); // Wait for turnToLonLat to finish
 
-                    // Distance to show only nearby events
-                    const distance = await calculateDistance(lat, lon, latitude, longitude); // Wait for distance calculation
+        //         console.log('Latitude:', lat, 'Longitude:', lon);
 
-                    if (distance <= 1500) {
-                        customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
-                    }
+        //         // Distance to show only nearby events
+        //         const distance = await calculateDistance(lat, lon, latitude, longitude); // Wait for distance calculation
 
-                    // Show all markers
-                    // customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
-                    
-                } catch (error) {
-                    console.error(`Error processing food item ${foodItem.location}:`, error.message);
+        //         if (distance <= 100000) {
+        //             customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
+        //         }
+
+        //         // Show all markers
+        //         // customMarker(foodItem, lat, lon); // Add marker if distance is within 1000m
+                
+        //     } catch (error) {
+        //         console.error(`Error processing food item ${foodItem.location}:`, error.message);
+        //     }
+        // }
+        // // }
+
+        // if (!response.ok) {
+        // throw new Error(`Response status: ${response.status}`);
+        // }
+    
+        // 3.0
+        if (data && typeof data === 'object') {
+            const dataArray = Object.values(data); // Convert object to array
+            console.log("Converted data array:", dataArray);
+
+            for (const foodItem of dataArray) {
+                console.log("Processing food item:", foodItem.location);
+                const { lat, lon } = await turnToLonLat(foodItem.location);
+                const distance = calculateDistance(lat, lon, latitude, longitude);
+
+                if (distance <= 100000) {
+                    customMarker(foodItem, lat, lon);
                 }
             }
+        } else {
+            console.error("Data is not an object:", data);
         }
-
-        if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-        }
-    
     } 
     catch (error) {
       console.error(error.message);
@@ -225,9 +255,11 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 
 function customMarker(item, latitude, longitude) {
+    console.log('Custom Marker:', item);
+
     // Add a custom marker
     const markerElement = document.createElement('div');
-    markerElement.className = 'shelter-marker';
+    markerElement.className = 'food-marker';
 
     const marker = new ol.Overlay({
         position: ol.proj.fromLonLat([longitude, latitude]), // Marker position
@@ -249,9 +281,10 @@ function customMarker(item, latitude, longitude) {
             <p><strong>Store:</strong> ${item.store}</p>
             <p><strong>Time:</strong> ${item.time}</p>
             <p><strong>Quantity Left:</strong> ${item.quantityLeft}</p>
-            <button onclick="viewMore('${item.id}')">View More</button>
         </div>
     `;
+
+    // <button onclick="viewMore('${item.id}')">View More</button>
 
     const popup = new ol.Overlay({
         element: popupElement,
@@ -282,3 +315,112 @@ function viewMore(eventId) {
     // Navigate to a detailed page or display more information
     window.location.href = `/events/${eventId}`;
 }
+
+
+
+// Fetch Food Stalls
+async function fetchFoodStalls() {
+    try {
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ date: '2024-12-22', weather: 'sunny' }), // Example payload
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log('Food stall predictions:', data.predictions);
+
+            // Read the unique_stalls.csv file
+            const stallsResponse = await fetch('/unique_stalls.csv');   
+            const csvText = await stallsResponse.text();
+            const stallsData = parseCSV(csvText);
+
+            // Loop through predictions and create markers
+            for (const [stall, servings] of Object.entries(data.predictions)) {
+                const stallInfo = stallsData.find(s => s.stall_name === stall);
+                if (stallInfo) {
+                    const latitude = parseFloat(stallInfo.latitude);
+                    const longitude = parseFloat(stallInfo.longitude);
+                    customFoodStallMarker({ stall: stallInfo.stall_name, type: stallInfo.type_of_shop, servings, closingTime: stallInfo.closing_time }, latitude, longitude);
+                }
+            }
+        } else {
+            console.error('Failed to fetch food stall predictions:', data.message);
+        }
+    } catch (error) {
+        console.error('Error fetching food stall data:', error);
+    }
+}
+
+// Utility function to parse CSV data
+function parseCSV(csvText) {
+    const rows = csvText.trim().split('\n');
+    const headers = rows.shift().split(',').map(header => header.trim()); // Clean headers
+
+    return rows.map(row => {
+        const values = row.split(',').map(value => value.trim()); // Clean values
+        return headers.reduce((obj, header, index) => {
+            obj[header] = values[index] || null; // Assign null if value is missing
+            return obj;
+        }, {});
+    });
+}
+
+
+// Custom Marker for Food Stalls
+function customFoodStallMarker(item, latitude, longitude) {
+    console.log('Custom Food Stall Marker:', item);
+
+    // Add a custom marker
+    const markerElement = document.createElement('div');
+    markerElement.className = 'food-stall-marker';
+
+    const marker = new ol.Overlay({
+        position: ol.proj.fromLonLat([longitude, latitude]),
+        positioning: 'center-center',
+        element: markerElement,
+        stopEvent: false
+    });
+
+    map.addOverlay(marker);
+
+    // Create a popup for displaying stall details
+    const popupElement = document.createElement('div');
+    popupElement.className = 'popup';
+    popupElement.innerHTML = `
+        <div class="popup-content">
+            <h3>${item.stall}</h3>
+            <p><strong>Type:</strong> ${item.type}</p>
+            <p><strong>Left-over Servings:</strong> ${item.servings}</p>
+            <p><strong>Closing Time:</strong> ${item.closingTime}00</p>
+        </div>
+    `;
+
+    const popup = new ol.Overlay({
+        element: popupElement,
+        positioning: 'bottom-center',
+        stopEvent: true,
+        autoPan: true,
+        autoPanAnimation: { duration: 250 },
+    });
+
+    // Add click listener to the marker
+    markerElement.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent the map's click handler from firing
+        popup.setPosition(ol.proj.fromLonLat([longitude, latitude]));
+        map.addOverlay(popup);
+    });
+
+    // Add a click listener to the map to hide the popup
+    map.getViewport().addEventListener('click', (event) => {
+        if (popup.getPosition()) {
+            popup.setPosition(undefined); // Hide the popup
+            map.removeOverlay(popup); // Remove the popup from the map
+        }
+    });
+}
+

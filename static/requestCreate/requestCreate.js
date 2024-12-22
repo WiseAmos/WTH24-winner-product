@@ -30,7 +30,9 @@ function getInput() {
     // Get values from the form
     const detail = document.getElementById('Detail').value;
     const location = document.getElementById('location').value;
-    const time = document.getElementById('Time').value;
+    const startTime = document.getElementById('StartTime').value.replace(':', '');
+    const endTime = document.getElementById('EndTime').value.replace(':', '');
+    const time = `${startTime} - ${endTime}`;
     const date = document.getElementById('Date').value;
     const type = document.getElementById('Type').value;
 
@@ -53,27 +55,30 @@ function getInput() {
     console.log('Request Data:', requestData);
 
     // Example: Display a success message
-    alert('Request created successfully!');
+    // alert('Request created successfully!');
 
     return requestData;
 }
 
 async function postData(requestData) {
     const url = "/data";
-    const localStorage = localStorage.getItem("authToken");
+    const token = localStorage.getItem("authToken");
     const decodedToken = decodeJWT(token); // Decode the JWT token
 
     if (!decodedToken || !decodedToken.decodedPayload) {
-        alert("Invalid or missing token!");
+        alert("Please Login to Create a Request");
         return;
     }
 
     try {
+        const uniqueKey = Date.now().toString();
+
         const response = await fetch("/data", {
             method: "POST",
             body: JSON.stringify({
                 path:"specialRequests",
                 data: {
+                    [uniqueKey]: {
                 details: requestData.detail,
                 location: requestData.location,
                 time: requestData.time,
@@ -83,6 +88,7 @@ async function postData(requestData) {
                 createdBy: decodedToken.decodedPayload.accountName,
                 status: "Pending"
                 }
+            }
             }),
             headers: {
                 "Content-Type": "application/json; charset=UTF-8"
@@ -92,6 +98,7 @@ async function postData(requestData) {
             throw new Error(`Response status: ${response.status}`);
         }
 
+        alert('Request created successfully!');
         const json = await response.json();
         console.log(json);
     } catch (error) {
