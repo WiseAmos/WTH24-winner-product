@@ -1,0 +1,74 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+/* Form Container */
+.form-container {
+    max-width: 95%; /* For mobile, ensure good spacing */
+    width: 360px;
+    margin: 20px auto;
+    background: #ffffff; /* White background for form */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.form-group label {
+    font-weight: bold;
+    color: #495057; /* Dark gray */
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Inputs and Selects */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #fdfdfd; /* Subtle background for input fields */
+}
+
+/* Buttons */
+.btn-container {
+    text-align: center;
+}
+
+.btn-container .btn {
+    background-color: #007bff; /* Bootstrap primary blue */
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-container .btn:hover {
+    background-color: #0056b3; /* Slightly darker blue on hover */
+    transform: translateY(-2px);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 393px) {
+    .form-container {
+        max-width: 90%;
+    }
+
+    .btn {
+        font-size: 16px;
+    }
+}

@@ -15,7 +15,7 @@ body, html {
     position: sticky;
     top: 0;
     z-index: 1000;
-    margin: 1rem 0 1rem 0;
+    margin: 1rem 0 0rem 0;
 }
 
 /* Profile Section */
@@ -56,7 +56,7 @@ body, html {
 
 /* Request Section */
 .request-section {
-    padding: 20px;
+    padding: 10px 20px 10px 20px;
     background-color: #fff;
 }
 
@@ -65,122 +65,6 @@ body, html {
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
-}
-
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Modal Content */
-.modal-content {
-    background-color: #fff;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.4s ease-in-out;
-    position: relative; /* This ensures the close button is positioned relative to this container */
-}
-
-/* Modal Image */
-.modal-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 20px 20px 0 0;
-}
-
-/* Modal Details */
-.modal-details {
-    padding: 20px;
-    font-size: 14px;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* Modal Title */
-.modal-details h3 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0;
-    color: #333;
-}
-
-/* Modal Content Paragraph */
-.modal-details p {
-    margin: 0;
-    line-height: 1.5;
-    color: #555;
-}
-
-/* Close Button Styling */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px; /* Set both width and height to ensure a perfect circle */
-    height: 40px;
-    font-size: 26px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-    background-color: #ff4c4c; /* Red color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%; /* Ensure the button is a circle */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    padding: 0; /* Remove padding to ensure consistent size */
-}
-
-.close:hover {
-    background-color: #ff0000; /* Darker red */
-    transform: scale(1.1); /* Slightly enlarge when hovered */
-}
-
-/* Accept Button Styling */
-.accept-btn {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    background-color: #6E966F;
-    color: white;
-    border: none;
-    border-radius: 0 0 20px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.accept-btn:hover {
-    background-color: #578C5F;
-}
-
-/* Animation */
-@keyframes slideIn {
-    from {
-        transform: translateY(100px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 
@@ -199,52 +83,58 @@ body, html {
     display: none; /* Safari and Chrome */
 }
 
-/* Card Styling */
+/* Style for the card */
 .card {
-    flex: 0 0 auto;
+    position: relative; /* For positioning the status in the top-right corner */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 200px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+/* Status styling */
+.status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
 }
 
-/* Image Styling */
+.status.pending {
+    background-color: #f39c12; /* Yellow for pending status */
+}
+
+.status.accepted {
+    background-color: #27ae60; /* Green for accepted status */
+}
+
+/* Card image styling */
 .card-image {
     width: 100%;
-    height: 140px;
+    height: 120px;
     object-fit: cover;
+    border-bottom: 2px solid #eee;
 }
 
-/* Content Styling */
+/* Card content styling */
 .card-content {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    padding: 10px;
 }
 
+/* Card title and summary */
 .card-title {
     font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin: 0;
+    margin-bottom: 5px;
 }
 
 .card-summary {
     font-size: 14px;
     color: #555;
-    line-height: 1.5;
-    margin: 0;
 }
 
 
@@ -332,6 +222,23 @@ body, html {
     margin: 0;
 }
 
+.status-bar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f39c12 ; /* Red for 'pending' */
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+/* For accepted status */
+.status-bar.accepted {
+    background-color: #4CAF50; /* Green for 'accepted' */
+}
+
 /* Modal for Special Requests */
 .modal {
     display: none;
@@ -346,73 +253,116 @@ body, html {
     align-items: center;
 }
 
-/* Basic styling for the modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
+/* Modal Content */
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.4s ease-in-out;
     position: relative;
 }
 
+.modal-content img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Modal Icon */
+.modal-icon {
+    font-size: 24px;  /* Matching the card icon size */
+    width: 50px;  /* Circular size of the icon */
+    height: 50px;  /* Circular size of the icon */
+    background-color: #6E966F;  /* Background color for the icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;  /* Circular icon */
+    margin-right: 15px;  /* Space between icon and title */
+}
+
+.modal-icon i {
+    font-size: 30px;  /* Size of the icon */
+    color: #f0f0f0;  /* Icon color */
+}
+
+/* Modal Header */
 .modal-header {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    padding: 15px;
 }
 
-.modal-icon {
-    font-size: 30px;
-    margin-right: 10px;
-}
-
-.close {
-    color: #aaa;
-    font-size: 28px;
+/* Modal Title */
+.modal-header h3 {
+    font-size: 20px;
     font-weight: bold;
+    color: #333;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.modal-details{
+    padding: 0 1rem 0 1rem;
+}
+
+/* Modal Body Paragraph */
+.modal-body p {
+    margin: 0;
+}
+
+/* Close Button Styling */
+.close {
     position: absolute;
     top: 10px;
-    right: 15px;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 26px;
+    font-weight: bold;
     cursor: pointer;
-}
-
-.modal-body p {
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-.accept-btn {
-    background-color: #6E966F;
     color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #ff4c4c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 0;
+}
+
+.close:hover {
+    background-color: #ff0000;
+    transform: scale(1.1);
+}
+
+/* Accept Button Styling */
+.accept-btn {
+    display: block;
     width: 100%;
+    padding: 15px;
+    background-color: #6E966F;
+    color: white;
+    border: none;
+    border-radius: 0 0 20px 20px;
     font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 .accept-btn:hover {
-    background-color: #557C56;
+    background-color: #578C5F;
 }
 
 
