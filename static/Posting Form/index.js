@@ -17,8 +17,12 @@ document.addEventListener("DOMContentLoaded",()=>{
         console.log("CLICKED")
         const newQuantityLeft = food["quantityLeft"] - 1;
         postData("announcements/"+food["type"]+"/" + food_identifier, { quantityLeft: newQuantityLeft });
-        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])+1,food["totalQuantity"]), 10);
+        setTimeout(() => updateProgress((food["totalQuantity"]-newQuantityLeft),food["totalQuantity"]), 10);
         sessionStorage.setItem("clicked",false)
+
+        food["quantityLeft"] = newQuantityLeft
+        sessionStorage.setItem("previouslyClicked",JSON.stringify(food))
+
         token = localStorage.getItem("authToken")
         const parts = token.split('.');
         if (parts.length !== 3) {
