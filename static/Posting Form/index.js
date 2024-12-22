@@ -1,4 +1,4 @@
-const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))
 sessionStorage.setItem("clicked",true)
 const food_identifier = food["id"]
 console.log(food)
