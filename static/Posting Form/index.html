@@ -15,9 +15,9 @@
 <h1 id="title"> Free Chicken Rice</h1>
 <h2 id="about"> This are left over chicken rice provided very kindly by "Lee Min Hoe" </h1>
 <ul class="fa-ul" id="list">
-    <li class="list-item"><span class="fa-li"><i class="fa-solid  fa-location-dot"></i></span>313A Sembawang Dr, S751313</li>
-    <li class="list-item"><span class="fa-li"><i class="fa-solid fa-calendar-days"></i></span>21/12/24 (Today)</li>
-    <li class="list-item"><span class="fa-li"><i class="fa-solid fa-clock"></i></span>20:00 - 21:00</li>
+    <li class="list-item"><span class="fa-li"><i class="fa-solid  fa-location-dot"></i></span><span id ="location">313A Sembawang Dr, S751313</span></li>
+    <li class="list-item"><span class="fa-li"><i class="fa-solid fa-calendar-days"></i></span><span id = "date">21/12/24 (Today)</span></li>
+    <li class="list-item"><span class="fa-li"><i class="fa-solid fa-clock"></i></span><span id="time">20:00 - 21:00</span></li>
 </ul>
 </div>
 <div id="progress-sector">
@@ -32,7 +32,7 @@
 <div class="nearbyFoods">
     <div class="nearbyFoodsHeader">
         <p class="sectionHeader">Extra Food Nearby</p>
-        <button class="button-19 viewAll" role="button">View more</button>
+        <button class="button-19 viewAll" onclick="location.href='/home'" >View more</button>
     </div>
     <div class="foodCardsContainer">
         <div class="foodCard" onclick="window.location.href='/foodDetails'">

@@ -1,5 +1,29 @@
 
-
+const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+sessionStorage.setItem("clicked",true)
+const food_identifier = food["id"]
+console.log(food)
+document.addEventListener("DOMContentLoaded",()=>{
+    const button = document.getElementById("sign-up")
+    console.log(button)
+    document.getElementById("image-banner").src = food["image"]
+    document.getElementById("title").innerText = food["title"]
+    document.getElementById("about").innerText = food["description"]
+    document.getElementById("location").innerText = food["location"]
+    document.getElementById("date").innerText = food["date"]
+    document.getElementById("time").innerText = food["time"]
+    setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"]),food["totalQuantity"]), 10);
+    button.addEventListener("click",()=>{
+      if(sessionStorage.getItem("clicked")=="true"){
+        console.log("CLICKED")
+        const newQuantityLeft = food["quantityLeft"] - 1;
+        postData("announcements/"+food["type"]+"/" + food_identifier, { quantityLeft: newQuantityLeft });
+        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])+1,food["totalQuantity"]), 10);
+        sessionStorage.setItem("clicked",false)
+        console.log(recomendme("john_doe_account",food["title"]))
+      }
+    })
+})
 // Function to update progress bar with keyframes
 function updateProgress(current, total) {
     const progressValue = document.querySelector('.progress-value');
@@ -33,44 +57,33 @@ function updateProgress(current, total) {
     progressLabel.textContent = `${current}/${total}`;
   }
   
-  // Example usage: update the progress bar dynamically
-  setTimeout(() => updateProgress(5, 10), 10); // Updates to 8/10 after 1 second
   
 
-  async function getData() {
+  async function getData(path) {
     const url = "/data";
     try {
-      const response = await fetch(url+"?path=data");
+      const response = await fetch(url+"?path="+path);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
   
       const json = await response.json();
-      console.log(json);
+      return json;
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  getData()
 
 
-  async function postData() {
+  async function postData(path,datainside) {
     const url = "/data";
     try {
-      const response = await fetch("/data", {
+      const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
-          path:"users",
-          data: {volunteer1:{
-            role: "volunteer",
-            image: "https://example.com/image.jpg",
-            name: "Ian douglas",
-            dob: "2006-06-15",
-            email: "charlie.brown@example.com",
-            phone: "+3344556677",
-            password: "volunteerpassword123"
-          }}
+          path:path,
+          data:datainside
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -86,3 +99,15 @@ function updateProgress(current, total) {
       console.error(error.message);
     }
   }
+
+
+  async function recomendme(username,action){
+    response = await fetch("/recomendations/?user="+username+"?"+action)
+
+    console.log("hit")
+    let data = await response.json();
+    console.log(data)
+    await postData(data["path"],data["important_data"])
+  }     
+  console.log(food["title"])
+  recomendme("john_doe_account",food["title"])
