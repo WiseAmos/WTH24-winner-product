@@ -63,6 +63,7 @@ app.get("/request/create", async(req, res) => {
 app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
+
 app.get("/map", async(req, res) => {
   res.sendFile(path.join(__dirname + "/static/map/map.html"));
 });
@@ -130,7 +131,7 @@ app.post('/data', async (req, res) => {
       console.log("Data:", received["data"]);
   
       const usersRef = ref(db, "data/" + received["path"]);
-      const newKey = push(usersRef).key; // Use filtered data for update
+  
       await update(usersRef, received["data"]);  // Update with filtered data
   
       console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
@@ -180,28 +181,8 @@ app.post("/announcement/update", async (req, res) => {
 
 // POST Route to Create a New Announcement
 app.post("/announcement/new", async (req, res) => {
-  const { category, data } = req.body;
-
-  try {
-    if (!category || !data) {
-      return res.status(400).send({ error: "Category and data are required" });
-    }
-
-    const announcementsRef = ref(db, `data/announcements/${category}`);
-    const newKey = push(announcementsRef).key;
-
-    const updateData = {};
-    updateData[newKey] = data;
-
-    await update(announcementsRef, updateData);
-
-    console.log(`New announcement created in category ${category}!`);
-    res.status(200).send({ success: true, message: "New announcement created successfully!" });
-  } catch (error) {
-    console.error("Error creating announcement:", error.message);
-    res.status(500).send({ error: "Internal Server Error" });
-  }
-});
+  
+})
 
 
 // Fetch details for a specific announcement
