@@ -6,6 +6,24 @@ document.getElementById('createForm').addEventListener('submit', function (e) {
     }
 });
 
+function decodeJWT(token) {
+    if (!token) {
+        console.error("No token provided for decoding.");
+        return null;
+    }
+
+    try {
+        const [header, payload, signature] = token.split('.');
+        const decodedHeader = JSON.parse(atob(header));
+        const decodedPayload = JSON.parse(atob(payload));
+
+        return { decodedHeader, decodedPayload, signature };
+    } catch (error) {
+        console.error("Error decoding JWT:", error);
+        return null;
+    }
+}
+
 
 function getInput() {
 
@@ -42,6 +60,14 @@ function getInput() {
 
 async function postData(requestData) {
     const url = "/data";
+    const localStorage = localStorage.getItem("authToken");
+    const decodedToken = decodeJWT(token); // Decode the JWT token
+
+    if (!decodedToken || !decodedToken.decodedPayload) {
+        alert("Invalid or missing token!");
+        return;
+    }
+
     try {
         const response = await fetch("/data", {
             method: "POST",
@@ -54,7 +80,7 @@ async function postData(requestData) {
                 date: requestData.date,
                 type: requestData.type,
                 timeStamp: new Date().toISOString(),
-                createdBy: "random_person",
+                createdBy: decodedToken.decodedPayload.accountName,
                 status: "Pending"
                 }
             }),

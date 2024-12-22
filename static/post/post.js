@@ -112,11 +112,11 @@ function displayAnnouncements(data) {
                     <p class="announcement-description">${announcement.description}</p>
                     <div class="announcement-details">
                         <p><i class="fa-solid fa-user"></i> <strong>By:</strong> ${announcement.createdBy}</p>
-                        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${announcement.location}</p>
                         <p><i class="fa-solid fa-clock"></i> <strong>Available Time:</strong> ${announcement.time}</p>
                         <p><i class="fa-solid fa-calendar"></i> <strong>Date:</strong> ${announcement.date}</p>
                         <p><i class="fa-solid fa-box"></i> <strong>Quantity Left:</strong> ${announcement.quantityLeft}</p>
                         <p><i class="fa-solid fa-clock"></i> <strong>Posted At:</strong> ${formatDate(announcement.timestamp)}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${announcement.location}</p>
                     </div>
                 </div>
             </div>
@@ -198,11 +198,11 @@ function displayPosts(data) {
                     <p class="announcement-description">${post.description}</p>
                     <div class="announcement-details">
                         <p><i class="fa-solid fa-user"></i> <strong>By:</strong> ${post.createdBy}</p>
-                        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${post.location}</p>
                         <p><i class="fa-solid fa-clock"></i> <strong>Available Time:</strong> ${post.time}</p>
                         <p><i class="fa-solid fa-calendar"></i> <strong>Date:</strong> ${post.date}</p>
                         <p><i class="fa-solid fa-box"></i> <strong>Quantity Left:</strong> ${post.quantityLeft}</p>
                         <p><i class="fa-solid fa-clock"></i> <strong>Posted At:</strong> ${formatDate(post.timestamp)}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${post.location}</p>
                     </div>
                 </div>
             </div>

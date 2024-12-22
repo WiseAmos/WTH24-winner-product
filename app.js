@@ -35,6 +35,10 @@ app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html"));
 });
 
+app.get("/map", async(req, res) => {
+  res.sendFile(path.join(__dirname + "/static/map/map.html"));
+});
+
 app.get('/data', async(req, res)=>{
 const dbRef = ref(getDatabase());
 get(child(dbRef,req["query"]["path"])).then((snapshot) => {
