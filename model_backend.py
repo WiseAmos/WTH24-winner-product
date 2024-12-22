@@ -71,14 +71,13 @@ def predict():
         # Combine numerical and categorical features into a single DataFrame
         all_features = pd.concat([pd.DataFrame([numerical_features]), encoded_features_df], axis=1)
 
-        # Prepare features for prediction
+        
         dmatrix = xgb.DMatrix(all_features, feature_names=list(all_features.columns))
 
         prediction = model.predict(dmatrix)
 
-        # Add the prediction to the dictionary
-        # Add the prediction to the dictionary
-        predictions[stall_name] = float(prediction[0])  # Convert numpy.float32 to Python float
+        
+        predictions[stall_name] = float(prediction[0])  
 
 
     # Return predictions as a JSON response
