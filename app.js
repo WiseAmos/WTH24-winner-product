@@ -503,10 +503,10 @@ app.post('/signup', async (req, res) => {
 app.post("/predict", async (req, res) => {
   try {
     req.body = {
-
+      
     }
     // Forward the request data to the Python service
-    const response = await axios.post("http://localhost:5001/predict", req.body);
+    const response = await axios.post("http://localhost:3000/predict", req.body);
 
     // Return the prediction result to the user
     res.json({
