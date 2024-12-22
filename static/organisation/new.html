@@ -19,7 +19,7 @@
         <label for="type">Type</label>
         <select id="type" name="type" required>
           <option value="food">Food</option>
-          <option value="clothes" disabled>Clothes (Not Allowed)</option>
+          <option value="clothes">Clothes</option>
         </select>
 
         <label for="store">Store Name</label>
@@ -30,9 +30,6 @@
 
         <label for="description">Description</label>
         <textarea id="description" name="description" placeholder="Describe your announcement" required></textarea>
-
-        <label for="quantity-left">Quantity Left</label>
-        <input type="number" id="quantity-left" name="quantityLeft" placeholder="Quantity Left" required>
 
         <label for="total-quantity">Total Quantity</label>
         <input type="number" id="total-quantity" name="totalQuantity" placeholder="Total Quantity" required>
@@ -46,8 +43,11 @@
         <label for="location">Location</label>
         <input type="text" id="location" name="location" placeholder="Pickup Location" required>
 
-        <label for="image">Image URL</label>
-        <input type="url" id="image" name="image" placeholder="Paste Image URL here" required>
+        <div class="form-group">
+          <img src="" id="announcement-image" alt="Announcement Image">
+          <input type="file" accept="image/*" id="image-upload" style="display: none;">
+          <label class="upload-button" for="image-upload">Upload Image</label>
+        </div>
 
         <button type="submit" class="primary-btn">Create Announcement</button>
       </form>
