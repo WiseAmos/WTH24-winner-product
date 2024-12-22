@@ -1,6 +1,7 @@
 #image-banner{
     width: 100vw;
     height: 30vh;
+    filter: brightness(90%);
 }
 
 body {
@@ -217,4 +218,19 @@ margin-bottom:7px;
 .button-19:active {
   border-width: 4px 0 0;
   background: none;
+}
+
+
+.back{
+  background-color: white;
+  color: black;
+  border-radius: 20px;
+  width: fit-content;
+  padding: 10px;
+  font-weight: bold;
+  position: absolute;
+  margin: 10px;
+  height: fit-content;
+  font-size: 35px;
+  z-index: 5;
 }
