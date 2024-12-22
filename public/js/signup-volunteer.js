@@ -50,6 +50,8 @@ document.querySelector("form").addEventListener("submit", async function (event)
         phone,
         password,
     });
+
+    window.location.href = "http://localhost:3000/volunteerHome"
 });
 
 // Utility function to convert file to base64

@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+} */
+
+#map {
+    width: 393px; /* Adjust width as needed */
+    height: 852px; /* Adjust height as needed */
+    /* margin: 20px auto; */ /* Center the map */
+    /*border: 1px solid #ccc; */ /* Optional styling */
+}
+
+.shelter-marker {
+    background-image: url('../shop.png'); /* Custom marker icon */
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.current-marker {
+    background-image: url('https://img.icons8.com/color/48/map-pin.png'); /* Custom marker icon */
+    background-size: cover;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+
+.popup {
+background: white;
+border: 1px solid #ccc;
+padding: 10px;
+border-radius: 8px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+position: relative;
+min-width: 200px;
+}
+
+.popup-content h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.popup-content p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.popup-content button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.popup-content button:hover {
+    background: #0056b3;
+}
+
+/* current location */
+/* "https://img.icons8.com/color/48/map-pin.png"  */

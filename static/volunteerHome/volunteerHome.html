@@ -13,7 +13,7 @@
             <div class="profile-icon">
                 <i class="fa-regular fa-user"></i>
             </div>
-            <span class="username">Username</span>
+            <span id="username" class="username">Username</span>
         </div>
         <div class="notifications">
             <i class="fa-solid fa-bell"></i>
@@ -23,7 +23,7 @@
         <h2 class="section-title">Food Delivery Requests</h2>
         <div class="card-container">
             <!-- Card 1 -->
-            <div class="card" onclick="showOtherRequestModal('request1', 'https://via.placeholder.com/250x140', 'ABC Fast Food', '123 Main St', '3.5 km', '10:00 AM - 12:00 PM', 'Delivery to 456 Kindness Ave')">
+            <!-- <div class="card" onclick="showOtherRequestModal('request1', 'https://via.placeholder.com/250x140', 'ABC Fast Food', '123 Main St', '3.5 km', '10:00 AM - 12:00 PM', 'Delivery to 456 Kindness Ave')">
                 <img src="https://via.placeholder.com/250x140" alt="Food Image" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">ABC Fast Food</h3>
@@ -32,10 +32,10 @@
                         <strong>Distance:</strong> 3.5 km
                     </p>
                 </div>
-            </div>
+            </div> -->
     
             <!-- Card 2 -->
-            <div class="card" onclick="showOtherRequestModal('request2', 'https://via.placeholder.com/250x140', 'Burger Town', '456 Foodie Lane', '5.2 km', '2:00 PM - 4:00 PM', 'Delivery to 789 Hope St')">
+            <!-- <div class="card" onclick="showOtherRequestModal('request2', 'https://via.placeholder.com/250x140', 'Burger Town', '456 Foodie Lane', '5.2 km', '2:00 PM - 4:00 PM', 'Delivery to 789 Hope St')">
                 <img src="https://via.placeholder.com/250x140" alt="Food Image" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Burger Town</h3>
@@ -44,7 +44,7 @@
                         <strong>Distance:</strong> 5.2 km
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     
         <!-- Modal -->
@@ -59,7 +59,7 @@
                     <p id="modal-time"></p>
                     <p id="modal-delivery"></p>
                 </div>
-                <button class="accept-btn" onclick="acceptRequest()">Accept Request</button>
+                <button class="accept-btn" onclick="acceptFoodRequest()">Accept Request</button>
             </div>
         </div>
     </section>
@@ -68,7 +68,7 @@
         <h2 class="section-title">Special Requests</h2>
         <div class="card-container">
             <!-- Card 1 -->
-            <div class="card" onclick="showSpecialRequestModal('request1', 'fas fa-box', 'Need Help Moving Furniture', '123 Main St', '3 days ago', 'Details about the special request')">
+            <!-- <div class="card" onclick="showSpecialRequestModal('request1', 'fas fa-box', 'Need Help Moving Furniture', '123 Main St', '3 days ago', 'Details about the special request')">
                 <div class="card-icon">
                     <i class="fas fa-box"></i>
                 </div>
@@ -80,10 +80,10 @@
                         <strong>Requested:</strong> 3 days ago
                     </p>
                 </div>
-            </div>
+            </div> -->
     
             <!-- Card 2 -->
-            <div class="card" onclick="showSpecialRequestModal('request2', 'fas fa-concierge-bell', 'Looking for a Personal Chef', '456 Foodie Lane', '1 day ago', 'Details about the special request')">
+            <!-- <div class="card" onclick="showSpecialRequestModal('request2', 'fas fa-concierge-bell', 'Looking for a Personal Chef', '456 Foodie Lane', '1 day ago', 'Details about the special request')">
                 <div class="card-icon">
                     <i class="fas fa-concierge-bell"></i>
                 </div>
@@ -95,21 +95,23 @@
                         <strong>Requested:</strong> 1 day ago
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
-    
-        <!-- Special Request Modal -->
-        <div id="special-modal" class="modal">
+
+        <!-- Modal for Special Requests -->
+        <div id="specialRequestModal" class="modal">
             <div class="modal-content">
-                <span class="close" onclick="closeSpecialModal()">&times;</span>
+                <span class="close" onclick="closeSpecialRequestModal()">&times;</span>
                 <div class="modal-header">
-                    <i id="modal-icon" class="modal-icon"></i>
+                    <div id="modal-icon" class="modal-icon">
+                        <!-- Icon will be set dynamically here -->
+                    </div>
                     <h3 id="modal-title"></h3>
                 </div>
                 <div class="modal-body">
-                    <p id="modal-location"><strong>Location:</strong></p>
-                    <p id="modal-request"><strong>Details/Description:</strong></p>
-                    <p id="modal-time"><strong>Requested:</strong></p>
+                    <p id="modal-location"></p>
+                    <p id="modal-time"></p>
+                    <p id="modal-details"></p>
                 </div>
                 <button class="accept-btn" onclick="acceptSpecialRequest()">Accept Request</button>
             </div>

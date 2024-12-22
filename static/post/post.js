@@ -56,7 +56,7 @@
 async function getAnnouncements() {
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements");
+        const response = await fetch(url+"?path=data/announcements/food");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -79,27 +79,49 @@ function displayAnnouncements(data) {
     
     
     announcementsArray.forEach((announcement) => {
+        // const announcementHTML = `
+        //     <div class="announcement">
+        //         <div class="announcement-title">
+        //             <h3>${announcement.title}</h2>
+        //         </div>
+        //         <div class="announcement-content">
+        //             <p>${announcement.description}</p>
+        //             <div class="info">
+        //                 <i class="fa-solid fa-location-dot"></i>
+        //                 <p>${announcement.location}</p>
+        //             </div>
+        //             <div class="info">
+        //                 <i class="fa-solid fa-clock"></i>
+        //                 <p>${announcement.timestamp}</p>
+        //             </div>
+        //             <div class="info">
+        //                 <i class="fa-solid fa-user"></i>
+        //                 <p>${announcement.createdBy}</p>
+        //             </div>
+        //         </div>
+        //     </div>
+        // `;
         const announcementHTML = `
-            <div class="announcement">
-                <div class="announcement-header d-flex align-items-center">
-                    <img class="avatar" src="${announcement.avatar}" alt="${announcement.name}">
-                    <div>
-                        <h3 class="h6 mb-0">${announcement.createdBy}</h3>
-                        <small>@${announcement.community}</small><br>
-                        <small>${announcement.timeAgo}</small>
+        <div class="announcement">
+                <div class="announcement-header">
+                    <h3 class="announcement-title">${announcement.title}</h3>
+                    <p class="announcement-store">${announcement.store}</p>
+                </div>
+                <div class="announcement-body">
+                    <img src="${announcement.image}" alt="${announcement.title}" class="announcement-image">
+                    <p class="announcement-description">${announcement.description}</p>
+                    <div class="announcement-details">
+                        <p><i class="fa-solid fa-user"></i> <strong>By:</strong> ${announcement.createdBy}</p>
+                        <p><i class="fa-solid fa-clock"></i> <strong>Available Time:</strong> ${announcement.time}</p>
+                        <p><i class="fa-solid fa-calendar"></i> <strong>Date:</strong> ${announcement.date}</p>
+                        <p><i class="fa-solid fa-box"></i> <strong>Quantity Left:</strong> ${announcement.quantityLeft}</p>
+                        <p><i class="fa-solid fa-clock"></i> <strong>Posted At:</strong> ${formatDate(announcement.timestamp)}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${announcement.location}</p>
                     </div>
                 </div>
-            <div class="announcement-image">
-                <img src="${announcement.image}" alt="${announcement.title}">
             </div>
-                <div class="announcement-content">
-                    <p>${announcement.description}</p>
-                    <p>${announcement.location}</p>
-                    <p>${announcement.timestamp}</p>
-                    <a href="#">View more</a>
-                </div>
-            </div>
-        `;
+            `;
+
         announcementsSection.innerHTML += announcementHTML;
     });
 }
@@ -111,7 +133,7 @@ const postsPerPage = 5;
 async function getPosts() {
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/posts");
+        const response = await fetch(url+"?path=data/announcements/clothes");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -134,13 +156,54 @@ function displayPosts(data) {
 
     // Loop through each post and generate HTML
     postsArray.forEach((post) => {
+        // const postHTML = `
+        //     <div class="clothingCardContainer">
+        //         <img src="${post.image}" alt="Clothing Image">
+        //         <p class="productTitle">${post.title}</p>
+        //         <div class="info">
+        //             <p>${post.publisher}</p>
+        //             <i class="fa-regular fa-heart heart"></i>
+        //         </div>
+        //     </div>
+        // `;
+        // const postHTML = `
+        //     <div class="announcement">
+        //         <div class="announcement-title">
+        //             <h3>${post.title}</h2>
+        //         </div>
+        //         <div class="announcement-content">
+        //             <p>${post.description}</p>
+        //             <div class="info">
+        //                 <i class="fa-solid fa-location-dot"></i>
+        //                 <p>${post.location}</p>
+        //             </div>
+        //             <div class="info">
+        //                 <i class="fa-solid fa-clock"></i>
+        //                 <p>${post.timestamp}</p>
+        //             </div>
+        //             <div class="info">
+        //                 <i class="fa-solid fa-user"></i>
+        //                 <p>${post.createdBy}</p>
+        //             </div>
+        //         </div>
+        //     </div>
+        // `;
         const postHTML = `
-            <div class="clothingCardContainer">
-                <img src="${post.image}" alt="Clothing Image">
-                <p class="productTitle">${post.title}</p>
-                <div class="info">
-                    <p>${post.publisher}</p>
-                    <i class="fa-regular fa-heart heart"></i>
+            <div class="announcement">
+                <div class="announcement-header">
+                    <h3 class="announcement-title">${post.title}</h3>
+                </div>
+                <div class="announcement-body">
+                    <img src="${post.image}" alt="${post.title}" class="announcement-image">
+                    <p class="announcement-description">${post.description}</p>
+                    <div class="announcement-details">
+                        <p><i class="fa-solid fa-user"></i> <strong>By:</strong> ${post.createdBy}</p>
+                        <p><i class="fa-solid fa-clock"></i> <strong>Available Time:</strong> ${post.time}</p>
+                        <p><i class="fa-solid fa-calendar"></i> <strong>Date:</strong> ${post.date}</p>
+                        <p><i class="fa-solid fa-box"></i> <strong>Quantity Left:</strong> ${post.quantityLeft}</p>
+                        <p><i class="fa-solid fa-clock"></i> <strong>Posted At:</strong> ${formatDate(post.timestamp)}</p>
+                        <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${post.location}</p>
+                    </div>
                 </div>
             </div>
         `;
@@ -149,6 +212,16 @@ function displayPosts(data) {
 }
 
   
+function formatDate(timestamp) {
+    const date = new Date(timestamp); // Convert the timestamp to a Date object
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed, so add 1
+    const day = String(date.getDate()).padStart(2, "0"); // Ensure 2-digit format for day
+
+    return `${year}-${month}-${day}`; // Format as YYYY-MM-DD
+}
+
+
 // Infinite scrolling for posts
 window.addEventListener("scroll", () => {
     if (
