@@ -1,4 +1,4 @@
-const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
+const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))
 sessionStorage.setItem("clicked",true)
 const food_identifier = food["id"]
 console.log(food)
@@ -17,8 +17,12 @@ document.addEventListener("DOMContentLoaded",()=>{
         console.log("CLICKED")
         const newQuantityLeft = food["quantityLeft"] - 1;
         postData("announcements/"+food["type"]+"/" + food_identifier, { quantityLeft: newQuantityLeft });
-        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])+1,food["totalQuantity"]), 10);
+        setTimeout(() => updateProgress((food["totalQuantity"]-newQuantityLeft),food["totalQuantity"]), 10);
         sessionStorage.setItem("clicked",false)
+
+        food["quantityLeft"] = newQuantityLeft
+        sessionStorage.setItem("previouslyClicked",JSON.stringify(food))
+
         token = localStorage.getItem("authToken")
         const parts = token.split('.');
         if (parts.length !== 3) {
@@ -129,7 +133,7 @@ function updateProgress(current, total) {
 
   document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
-    const foodApiUrl = '/data/?path=announcements';
+    const foodApiUrl = '/data?path=announcements';
     
     // Select the container where the food announcements will go
     const foodCardsContainer = document.querySelector('.foodCardsContainer');
@@ -139,8 +143,17 @@ function updateProgress(current, total) {
     async function fetchFoodAnnouncements() {
         try {
             const response = await fetch(foodApiUrl);
-            const data = await response.json();
-            
+            let data = await response.json();
+            data = data["food"]
+            temp_data = []
+            for (let i=0;i<data.length;i++){
+                if (data[i]!=null){
+                    temp_data.push(data[i])
+                }
+            }
+        
+            data = temp_data
+            console.log(data)
             // Check if the data is an array
             if (Array.isArray(data)) {
                 // Save the data in sessionStorage
@@ -175,13 +188,10 @@ function updateProgress(current, total) {
 
                     // Add click event to navigate to the /foodDetails page and store the clicked data
                     foodCard.addEventListener('click', () => {
-                        // Store the clicked food item data in sessionStorage under "previouslyClicked"
-                        let previouslyClicked = JSON.parse(sessionStorage.getItem('previouslyClicked')) || [];
-                        previouslyClicked.push(foodItem); // Add the clicked food item to the array
-                        sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+                      sessionStorage.setItem('previouslyClicked', JSON.stringify(foodItem)); // Save it back to sessionStorage
 
-                        // Redirect to the food details page
-                        window.location.href = '/foodDetails';
+                      // Redirect to the food details page
+                      window.location.href = '/foodDetails';
                     });
 
                     // Append the food card to the food cards container
@@ -252,7 +262,4 @@ function updateProgress(current, total) {
 
     // Call the function to fetch and display food announcements when the page loads
     fetchFoodAnnouncements();
-
-    // Call the function to fetch and display the data
-    fetchClothingData();
 });

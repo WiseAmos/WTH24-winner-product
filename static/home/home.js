@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
-    const foodApiUrl = '/data/?path=announcements';
+    const foodApiUrl = '/data/?path=announcements/food';
     
     // Select the container where the food announcements will go
     const foodCardsContainer = document.querySelector('.foodCardsContainer');
@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchFoodAnnouncements() {
         try {
             const response = await fetch(foodApiUrl);
-            const data = await response.json();
+            const rawData = await response.json();
+            const data = Object.values(rawData);
             
             // Check if the data is an array
             if (Array.isArray(data)) {
@@ -46,10 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     // Add click event to navigate to the /foodDetails page and store the clicked data
                     foodCard.addEventListener('click', () => {
-                        // Store the clicked food item data in sessionStorage under "previouslyClicked"
-                        let previouslyClicked = JSON.parse(sessionStorage.getItem('previouslyClicked')) || [];
-                        previouslyClicked.push(foodItem); // Add the clicked food item to the array
-                        sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+                        sessionStorage.setItem('previouslyClicked', JSON.stringify(foodItem)); // Save it back to sessionStorage
 
                         // Redirect to the food details page
                         window.location.href = '/foodDetails';
@@ -69,8 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to fetch clothing data and store it in sessionStorage
     async function fetchClothingData() {
         try {
-            const response = await fetch('/data/?path=announcements/clothAnnouncements');
-            const data = await response.json();
+            const response = await fetch('/data/?path=announcements/clothes');
+            const rawData = await response.json();
+            const data = Object.values(rawData);
     
             // Save the data in sessionStorage
             sessionStorage.setItem('clothingData', JSON.stringify(data));
@@ -118,11 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Clear previously clicked food items before storing the new data
                     sessionStorage.removeItem('previouslyClicked');
 
-                    // Store the clicked food item data in sessionStorage under "previouslyClicked"
-                    let previouslyClicked = [];
-                    previouslyClicked.push(item); // Add the clicked food item to the array
-                    console.log(item);
-                    sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+                    sessionStorage.setItem('previouslyClicked', JSON.stringify(item)); // Save it back to sessionStorage
     
                     window.location.href = '/foodDetails';
                 });

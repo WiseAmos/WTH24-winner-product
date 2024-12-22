@@ -56,7 +56,7 @@
 async function getAnnouncements() {
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements/food");
+        const response = await fetch(url+"?path=announcements/food");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -133,7 +133,7 @@ const postsPerPage = 5;
 async function getPosts() {
     const url = "/data";
     try {
-        const response = await fetch(url+"?path=data/announcements/clothes");
+        const response = await fetch(url+"?path=announcements/clothes");
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
@@ -221,19 +221,24 @@ function formatDate(timestamp) {
     return `${year}-${month}-${day}`; // Format as YYYY-MM-DD
 }
 
-
-// Infinite scrolling for posts
-window.addEventListener("scroll", () => {
-    if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200
-    ) {
-        fetchPosts(true); // Load more posts
-    }
-});
-
 document.addEventListener("DOMContentLoaded", () => {
     getAnnouncements();
     getPosts();
+
+    // Get the 'tab' value from the URL
+    const tabValue = new URLSearchParams(window.location.search).get('tab');
+
+    if (tabValue) {
+        // Find the button with the matching data-target attribute
+        const matchingButton = document.querySelector(`.tab[data-target="${tabValue}"]`);
+
+        if (matchingButton) {
+            // Simulate a click on the button
+            matchingButton.click();
+        } else {
+            console.error(`No button found with data-target="${tabValue}"`);
+        }
+    }
 }); 
 
 // Add click event listeners to each tab

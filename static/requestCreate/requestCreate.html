@@ -9,6 +9,9 @@
 </head>
 <body>
     <div class="form-container shadow-sm">
+        <button class="back" onclick="location.href='/home'" >
+            <i class="fa-solid fa-hand-point-left"></i>
+        </button>
         <h2 class="text-center mb-4">Create Request</h2>
         <form id="createForm">
             <div class="form-group mb-3">
@@ -20,8 +23,12 @@
                 <textarea id="location" name="location" class="form-control" rows="1" placeholder="Enter location" required></textarea>
             </div>
             <div class="form-group mb-3">
-                <label for="Time" class="form-label">Time:</label>
-                <input type="time" id="Time" name="Time" class="form-control" required>
+                <label for="StartTime" class="form-label">Start Time:</label>
+                <input type="time" id="StartTime" name="StartTime" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="EndTime" class="form-label">End Time:</label>
+                <input type="time" id="EndTime" name="EndTime" class="form-control" required>
             </div>
             <div class="form-group mb-3">
                 <label for="Date" class="form-label">Date:</label>
@@ -43,6 +50,7 @@
         </form>
     </div>
 
+    <script src="https://kit.fontawesome.com/229dff7a33.js" crossorigin="anonymous"></script>
     <script src="../requestCreate/requestCreate.js"></script>
 </body>
 </html>

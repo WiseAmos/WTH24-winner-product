@@ -85,6 +85,32 @@ const populateDatabase = async () => {
             time: "Before 2100",
             location: "789 Market Street, City C",
             timestamp: new Date().toISOString()
+          },
+          3: {
+            createdBy: "helping_hands_account", // Organization
+            image: "https://static1.straitstimes.com.sg/s3fs-public/articles/2022/05/12/yu-willinghearts2.jpg?VersionId=_eBhuY7IOxhVWywmIqp89OBebci6NdaO",
+            store: "Helping Hands Kitchen",
+            title: "Free Meals for the Evening",
+            date: "24 December 2024",
+            description: "We have prepared extra meals for families in need. Please collect them between 6 PM and 9 PM.",
+            quantityLeft: 25,
+            totalQuantity: 50,
+            time: "1800 - 2100",
+            location: "123 Charity Lane, City A, Singapore 123456",
+            timestamp: new Date().toISOString()
+          },
+          4: {
+            createdBy: "abc_supermarket", // Food Stall/Company
+            image: "https://thesmartlocal.com/wp-content/uploads/2021/05/image11-8.png",
+            store: "ABC Supermarket",
+            title: "Surplus Vegetables Giveaway",
+            date: "23 December 2024",
+            description: "We have surplus fresh vegetables available for collection. Please pick up before 7 PM.",
+            quantityLeft: 15,
+            totalQuantity: 25,
+            time: "0900 - 1900",
+            location: "789 Market Street, City C",
+            timestamp: new Date().toISOString()
           }
         },
         clothes: {
@@ -117,6 +143,7 @@ const populateDatabase = async () => {
       },
       specialRequests: { // can be created through a form that they input and submit.
         1: {
+          requestID: 1,
           createdBy: "john_doe_account", // Updated to reference the unique account_name
           type: "transport",
           details: "Need a volunteer to help me reach the healthcare center for a checkup.",
@@ -127,6 +154,7 @@ const populateDatabase = async () => {
           timestamp: new Date().toISOString()
         },
         2: {
+          requestID: 2,
           createdBy: "john_doe_account", // Updated to reference the unique account_name
           type: "furniture",
           details: "Need help moving a heavy table to another room.",
@@ -139,6 +167,7 @@ const populateDatabase = async () => {
       },
       foodRequests: { // created when "I want this one!" is clicked, automatic.
         1: {
+          requestID: 1,
           createdBy: "john_doe_account", // Updated to reference the unique account_name
           details: "Need help collecting food please!",
           foodID: 1, // Updated to reference the unique food announcement ID
@@ -149,6 +178,7 @@ const populateDatabase = async () => {
           timestamp: new Date().toISOString()
         },
         2: {
+          requestID: 2,
           createdBy: "john_doe_account", // Updated to reference the unique account_name
           details: "Need help collecting food please!",
           foodID: 2, 
