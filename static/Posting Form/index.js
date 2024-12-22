@@ -129,7 +129,7 @@ function updateProgress(current, total) {
 
   document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
-    const foodApiUrl = '/data/?path=announcements';
+    const foodApiUrl = '/data?path=announcements';
     
     // Select the container where the food announcements will go
     const foodCardsContainer = document.querySelector('.foodCardsContainer');
@@ -139,8 +139,17 @@ function updateProgress(current, total) {
     async function fetchFoodAnnouncements() {
         try {
             const response = await fetch(foodApiUrl);
-            const data = await response.json();
-            
+            let data = await response.json();
+            data = data["food"]
+            temp_data = []
+            for (let i=0;i<data.length;i++){
+                if (data[i]!=null){
+                    temp_data.push(data[i])
+                }
+            }
+        
+            data = temp_data
+            console.log(data)
             // Check if the data is an array
             if (Array.isArray(data)) {
                 // Save the data in sessionStorage
@@ -252,7 +261,4 @@ function updateProgress(current, total) {
 
     // Call the function to fetch and display food announcements when the page loads
     fetchFoodAnnouncements();
-
-    // Call the function to fetch and display the data
-    fetchClothingData();
 });
