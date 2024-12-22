@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Announcement</title>
+  <link rel="stylesheet" href="new.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <button id="back-button">← Back</button>
+      </nav>
+      <h1>Create Announcement</h1>
+    </header>
+    <main>
+      <form id="new-announcement-form">
+        <label for="type">Type</label>
+        <select id="type" name="type" required>
+          <option value="food">Food</option>
+          <option value="clothes" disabled>Clothes (Not Allowed)</option>
+        </select>
+
+        <label for="store">Store Name</label>
+        <input type="text" id="store" name="store" placeholder="Store Name" required>
+
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="Announcement Title" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Describe your announcement" required></textarea>
+
+        <label for="quantity-left">Quantity Left</label>
+        <input type="number" id="quantity-left" name="quantityLeft" placeholder="Quantity Left" required>
+
+        <label for="total-quantity">Total Quantity</label>
+        <input type="number" id="total-quantity" name="totalQuantity" placeholder="Total Quantity" required>
+
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Time</label>
+        <input type="text" id="time" name="time" placeholder="e.g., 8 PM - 10 PM" required>
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="Pickup Location" required>
+
+        <label for="image">Image URL</label>
+        <input type="url" id="image" name="image" placeholder="Paste Image URL here" required>
+
+        <button type="submit" class="primary-btn">Create Announcement</button>
+      </form>
+    </main>
+  </div>
+  <script src="new.js"></script>
+</body>
+</html>
