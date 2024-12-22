@@ -63,26 +63,38 @@ app.get("/request/create", async(req, res) => {
 app.get("/foodDetails", async(req, res) => {
     res.sendFile(path.join(__dirname + "/static/Posting Form/index.html")); 
 });
-
 app.get("/map", async(req, res) => {
   res.sendFile(path.join(__dirname + "/static/map/map.html"));
 });
 
-app.get('/data', async (req, res) => { 
-  const dbRef = ref(getDatabase()); 
- 
-  get(child(dbRef, "data/" + req.query.path)) 
-    .then((snapshot) => { 
-      if (snapshot.exists()) { 
-          const data = snapshot.val(); 
-          // Directly return the raw data from the snapshot 
-          const filteredData = Object.entries(data) 
-          .filter(([key, value]) => value !== null) 
-          .map(([key, value]) => ({ key, value })); 
-          const jsonData = filteredData.reduce((acc, item) => { 
-              acc[item.key] = item.value; 
-              return acc; 
-          }, {}); 
+app.get("/organisation", async(req, res) => {
+    res.sendFile(path.join(__dirname + "/static/organisation/organisation.html"));
+});
+
+app.get("/organisation/edit", (req, res) => {
+  res.sendFile(path.join(__dirname, "/static/organisation/edit.html"));
+});
+
+
+app.get("/organisation/new", async (req, res) => {
+  res.sendFile(path.join(__dirname + "/static/organisation/new.html"));
+});
+
+app.get('/data', async (req, res) => {
+    const dbRef = ref(getDatabase());
+  
+    get(child(dbRef, "data/" + req.query.path))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            // Directly return the raw data from the snapshot
+            const filteredData = Object.entries(data)
+            .filter(([key, value]) => value !== null)
+            .map(([key, value]) => ({ key, value }));
+            const jsonData = filteredData.reduce((acc, item) => {
+                acc[item.key] = item.value;
+                return acc;
+            }, {});
 
           res.json(jsonData); 
       } else { 
@@ -128,6 +140,93 @@ app.post('/data', async (req, res) => {
       res.status(500).send({ success: false, error: error.message });
     }
   });
+
+app.post('/announcement', async (req, res) => {
+  try {
+    const { path, data } = req.body;
+
+    const announcementsRef = ref(db, "data/" + path);
+    const newKey = push(announcementsRef).key;
+
+    const updateData = {};
+    updateData[newKey] = data;
+    await update(announcementsRef, updateData);
+
+    res.status(200).send({ success: true });
+  } catch (error) {
+    console.error("Error while posting announcement:", error.message);
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
+
+// POST Route to Update an Existing Announcement
+app.post("/announcement/update", async (req, res) => {
+  const { category, id, data } = req.body; // category=food, id=uniqueKey, data={updated fields}
+  try {
+    if (!category || !id || !data) {
+      return res.status(400).send({ error: "Category, ID, and data are required" });
+    }
+
+    const announcementRef = ref(db, `data/announcements/${category}/${id}`);
+    await update(announcementRef, data);
+
+    console.log(`Announcement ${id} in category ${category} updated successfully!`);
+    res.status(200).send({ success: true, message: "Announcement updated successfully!" });
+  } catch (error) {
+    console.error("Error updating announcement:", error.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+// POST Route to Create a New Announcement
+app.post("/announcement/new", async (req, res) => {
+  const { category, data } = req.body;
+
+  try {
+    if (!category || !data) {
+      return res.status(400).send({ error: "Category and data are required" });
+    }
+
+    const announcementsRef = ref(db, `data/announcements/${category}`);
+    const newKey = push(announcementsRef).key;
+
+    const updateData = {};
+    updateData[newKey] = data;
+
+    await update(announcementsRef, updateData);
+
+    console.log(`New announcement created in category ${category}!`);
+    res.status(200).send({ success: true, message: "New announcement created successfully!" });
+  } catch (error) {
+    console.error("Error creating announcement:", error.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+
+// Fetch details for a specific announcement
+app.get("/announcement/details", async (req, res) => {
+  const { category, id } = req.query;
+
+  if (!category || !id) {
+    return res.status(400).send({ error: "Category and ID are required" });
+  }
+
+  try {
+    const dbRef = ref(getDatabase());
+    const snapshot = await get(child(dbRef, `data/announcements/${category}/${id}`));
+
+    if (snapshot.exists()) {
+      res.status(200).json({ id, category, ...snapshot.val() });
+    } else {
+      res.status(404).send({ error: "Announcement not found" });
+    }
+  } catch (error) {
+    console.error("Error fetching announcement details:", error.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 
 //EXAMPLE
 //   async function postData() {

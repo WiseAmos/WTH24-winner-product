@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Announcement</title>
+  <link rel="stylesheet" href="edit.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <button id="back-button">← Back</button>
+      </nav>
+      <h1>Edit Announcement</h1>
+    </header>
+    <main>
+      <!-- Scrollable Form Container -->
+      <div class="form-container">
+        <form id="edit-form">
+          <label for="type">Type</label>
+          <input type="text" id="type" name="type" readonly class="readonly">
+
+          <label for="store">Store Name</label>
+          <input type="text" id="store" name="store" placeholder="Store Name">
+
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" placeholder="Announcement Title">
+
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="Describe your announcement"></textarea>
+
+          <label for="quantity-left">Quantity Left</label>
+          <input type="number" id="quantity-left" name="quantityLeft" placeholder="Quantity Left">
+
+          <label for="total-quantity">Total Quantity</label>
+          <input type="number" id="total-quantity" name="totalQuantity" placeholder="Total Quantity">
+
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date">
+
+          <label for="time">Time</label>
+          <input type="text" id="time" name="time" placeholder="e.g., 8 PM - 10 PM">
+
+          <label for="location">Location</label>
+          <input type="text" id="location" name="location" placeholder="Pickup Location">
+        </form>
+      </div>
+
+      <!-- Fixed Update Button -->
+      <div class="update-btn-container">
+        <button type="submit" form="edit-form" class="primary-btn">Update</button>
+      </div>
+    </main>
+  </div>
+  <script src="edit.js"></script>
+</body>
+</html>

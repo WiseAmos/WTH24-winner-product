@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 393px;
+  margin: 0 auto;
+  background-color: white;
+  height: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header nav button {
+  background: none;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  margin-bottom: 60px; /* To ensure space for the fixed button container */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form input,
+form textarea {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form input.readonly {
+  background-color: #f1f1f1;
+  cursor: not-allowed;
+}
+
+textarea {
+  resize: none;
+}
+
+.update-btn-container {
+  position: fixed;
+  bottom: 0;
+  width: 95%;
+  max-width: 373px;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.update-btn-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; /* Make it full-width for better UI on mobile */
+}
+
+.update-btn-container button:hover {
+  background-color: #0056b3;
+}
