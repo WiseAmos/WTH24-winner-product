@@ -18,7 +18,7 @@ body {
 }
 
 .shelter-marker {
-    background-image: url('../shop.png'); /* Custom marker icon */
+    background-image: url('../food-removebg-preview.png'); /* Custom marker icon */
     background-size: cover;
     width: 60px;
     height: 60px;

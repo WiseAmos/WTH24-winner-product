@@ -279,9 +279,10 @@ function customMarker(item, latitude, longitude) {
             <p><strong>Store:</strong> ${item.store}</p>
             <p><strong>Time:</strong> ${item.time}</p>
             <p><strong>Quantity Left:</strong> ${item.quantityLeft}</p>
-            <button onclick="viewMore('${item.id}')">View More</button>
         </div>
     `;
+
+    // <button onclick="viewMore('${item.id}')">View More</button>
 
     const popup = new ol.Overlay({
         element: popupElement,
