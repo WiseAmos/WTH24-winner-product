@@ -1,17 +1,40 @@
 import express from "express";
-import bodyParser from "body-parser";
+import bodyParser, { json } from "body-parser";
 import path from 'path';
 import admin from "firebase-admin";
 const { db } = require("./firebase.js");
 import { update,set,push, getDatabase, ref, child, get } from "firebase/database";
-
+import exp from "constants";
+const jwt = require('jsonwebtoken'); 
+const SECRET_KEY = 'your-secret-key'; 
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
+app.use(express.static(path.join(__dirname, '/public')))
+
+
+app.get('/signup', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup.html'))
+});
+app.get('/signup/signup-volunteer', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-volunteer.html'))
+});
+app.get('/signup/signup-food', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-food.html'))
+});
+app.get('/signup/signup-Organization', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-Organization.html'))
+});
+app.get('/signup/signup-Normal', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-Normal.html'))
+});
+app.get('/login', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/login.html'))
+});
 
 app.get('/announcement', (req, res) => {
-    res.sendFile(path.join(__dirname, '/static/post/post.html'));
+    res.sendFile(path.join(__dirname + '/static/post/post.html'));
 });
 
 app.use(express.json());
@@ -197,6 +220,71 @@ app.put("/updateSpecialRequestStatus", async (req, res) => {
       res.status(500).send({ success: false, error: error.message });
     }
   });
+
+
+  app.get('/recomendations', async (req, res) => {
+    const username = req.query.user.split("?")[0]
+    const action = req.query.user.split("?")[1]
+    const otherinfo = await fetch("http://localhost:3000/data?path=announcements")
+    const otherinforejson = await otherinfo.json()
+    const reponsestring =  JSON.stringify(otherinforejson)
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+    const genAI = new GoogleGenerativeAI("AIzaSyCXb4dtQZq2uk5IHv-cZ75dmniMBMNwCJw");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `"base on this user `+username+` and also on other relevant information regarding the organisation
+    and volunteers and food places return in a json format on whether if this person needs a volueenter and  which organisation
+    voluenteer and food stall may be able to help this person. The plan may consists of using more then an organisation volunteer
+    and food place to help this person or it could use non as well. This user also happen to choose event with the title `+action+` hence please provide the according information for voluenteer_data base on the selected event. For exmaple if they choose Giving out free clothes for Christmas! 
+    use the data 
+    {
+      "createdBy": "helping_hands_account",
+      "date": "24 December 2024",
+      "description": "We have a variety of clothes available for free distribution. Merry Christmas, hohoho. Come and pick your favorites!",
+      "image": "https://th.bing.com/th/id/OIP.Yq3fgpjpo3oMbQQMoK7orAHaEK?w=750&h=422&rs=1&pid=ImgDetMain",
+      "location": "456 Donation Drive, City B, Singapore 123456",
+      "quantityLeft": 20,
+      "time": "1500 - 2000",
+      "timestamp": "2024-12-21T14:04:02.430Z",
+      "title": "Giving out free clothes for Christmas!",
+      "totalQuantity": 30
+    }
+    Please return it in the below format when submitting a reqest for needing voluenteering assitance. Take note to only return what it in the format strictly.
+    START FORMAT
+    {
+    need_help: true
+    voluenteer_data: {
+      "createdBy": "john_doe_account",
+      "date": "2024-12-21T14:04:02.446Z",
+      "details": "Need help collecting food please!",
+      "foodID": 2,
+      "location": "123 Main Street, City",
+      "status": "pending",
+      "time": "10:04:02 pm",
+      "timestamp": "2024-12-21T14:04:02.446Z"
+    }
+    recomendations: 
+    {
+    recomended:[{
+    type: clothes
+    id : 2
+    title : "Free clothes for all"
+  }]
+    }
+  }
+  END FORMAT
+  This are the other releveant information -> `+reponsestring; 
+    const result = await model.generateContent(prompt);
+    const json_result_promt = JSON.parse(result.response.text().substring(7,result.response.text().length-4));
+      const reqest = await fetch("http://localhost:3000/data?path=foodRequests")
+      const requests_id_clean = await reqest.json()
+      const id = Object.keys(requests_id_clean).length+1
+      if (json_result_promt["need_help"]){  
+        console.log(id)
+        const data = {"path":"foodRequests/"+id,"important_data":json_result_promt["voluenteer_data"]}
+        console.log(data)
+        res.json(data)
+      }
+  });
   
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -204,3 +292,96 @@ app.listen(PORT, () => {
 });
 
 
+
+
+app.post('/login', async (req, res) => {
+  const { accountName, password } = req.body; // Get accountName and password from request body
+
+  if (!accountName || !password) {
+      return res.status(400).send({ success: false, message: 'Account Name and Password are required.' });
+  }
+
+  try {
+      const dbRef = ref(getDatabase());
+      const path = "users"; // Path to all user accounts
+
+      // Fetch all accounts from the database
+      const snapshot = await get(child(dbRef, `data/${path}`));
+
+      if (snapshot.exists()) {
+          const accounts = snapshot.val(); // JSON of accounts
+
+          // Check if the accountName exists
+          if (accounts[accountName]) {
+              const account = accounts[accountName];
+
+              // Validate the password
+              if (account.password === password) {
+                  // Generate JWT
+                  const token = jwt.sign(
+                      {
+                          accountName: accountName,
+                          role: account.role,
+                      },
+                      SECRET_KEY,
+                      { expiresIn: '1h' } // Token expires in 1 hour
+                  );
+
+                  return res.send({
+                      success: true,
+                      message: 'Login successful!',
+                      token: token, 
+                      data: {
+                          accountName: accountName,
+                          role: account.role,
+                          
+                      },
+                  });
+              } else {
+                  return res.status(401).send({ success: false, message: 'Invalid password.' });
+              }
+          } else {
+              return res.status(404).send({ success: false, message: 'Account not found.' });
+          }
+      } else {
+          return res.status(404).send({ success: false, message: 'No user data found in the database.' });
+      }
+  } catch (error) {
+      console.error('Error during login:', error);
+      return res.status(500).send({ success: false, message: 'Internal server error.' });
+  }
+});
+
+app.post('/signup', async (req, res) => {
+  try {
+      const received = req.body;
+      console.log("Path:", received["path"]);
+      console.log("Data:", received["data"]);
+
+      const usersRef = ref(db, "data/" + received["path"]);
+      const newKey = push(usersRef).key; // Use filtered data for update
+      await update(usersRef, received["data"]); // Update with filtered data
+
+      console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
+
+      // Extract AccountName and AccountRole for JWT
+      const accountName = Object.keys(received["data"])[0]; // Extract AccountName
+      const accountRole = received["data"][accountName].role; // Extract AccountRole
+
+      // Generate a JWT Token
+      const token = jwt.sign(
+          {
+              accountName: accountName,
+              accountRole: accountRole,
+          },
+          SECRET_KEY,
+          { expiresIn: '1h' } // Token valid for 1 hour
+      );
+
+      // Respond with the token
+      res.status(200).send({ success: true, token: token });
+  } catch (error) {
+      console.error("Error updating :( -> ", error.message);
+      res.status(500).send({ success: false, error: error.message });
+  }
+});

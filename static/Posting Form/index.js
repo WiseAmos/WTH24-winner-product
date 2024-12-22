@@ -1,7 +1,7 @@
 
 const food = JSON.parse(sessionStorage.getItem("previouslyClicked"))[0]
 sessionStorage.setItem("clicked",true)
-const food_identifier = 2
+const food_identifier = food["id"]
 console.log(food)
 document.addEventListener("DOMContentLoaded",()=>{
     const button = document.getElementById("sign-up")
@@ -17,9 +17,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(sessionStorage.getItem("clicked")=="true"){
         console.log("CLICKED")
         const newQuantityLeft = food["quantityLeft"] - 1;
-        postData("announcements/food/" + food_identifier, { quantityLeft: newQuantityLeft });
-        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])-1,food["totalQuantity"]), 10);
+        postData("announcements/"+food["type"]+"/" + food_identifier, { quantityLeft: newQuantityLeft });
+        setTimeout(() => updateProgress((food["totalQuantity"]-food["quantityLeft"])+1,food["totalQuantity"]), 10);
         sessionStorage.setItem("clicked",false)
+        console.log(recomendme("john_doe_account",food["title"]))
       }
     })
 })
@@ -98,3 +99,15 @@ function updateProgress(current, total) {
       console.error(error.message);
     }
   }
+
+
+  async function recomendme(username,action){
+    response = await fetch("/recomendations/?user="+username+"?"+action)
+
+    console.log("hit")
+    let data = await response.json();
+    console.log(data)
+    await postData(data["path"],data["important_data"])
+  }     
+  console.log(food["title"])
+  recomendme("john_doe_account",food["title"])
