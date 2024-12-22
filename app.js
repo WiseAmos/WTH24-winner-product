@@ -520,6 +520,7 @@ app.post("/predict", async (req, res) => {
   }
 });
 
+
 // Serve the unique_stalls.csv file
 app.get('/unique_stalls.csv', (req, res) => {
   res.sendFile(path.join(__dirname, 'unique_stalls.csv'));
