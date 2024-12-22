@@ -1,3 +1,26 @@
+// Assume this is your JWT token
+const token = localStorage.getItem("authToken");
+
+// Split the token into its three parts (header, payload, signature)
+const parts = token.split('.');
+if (parts.length !== 3) {
+  throw new Error("Invalid JWT format");
+}
+
+// Decode the payload (the second part of the JWT)
+const payloadBase64 = parts[1].replace(/-/g, '+').replace(/_/g, '/'); // Base64URL to Base64
+const payloadJson = atob(payloadBase64); // Decode Base64
+const payload = JSON.parse(payloadJson); // Parse JSON
+
+// Extract username or other information
+const username = payload.accountName; // Adjust this based on your token structure
+
+console.log("Decoded Payload:", payload);
+console.log("Username:", username);
+
+const usernameHTML = document.getElementById('username');
+usernameHTML.innerText = username;
+
 // Show the modal with the food request details
 function showOtherRequestModal(id, image, title, pickup, distance, time, delivery) {
     const modal = document.getElementById('modal');
@@ -67,6 +90,7 @@ async function acceptFoodRequest() {
                     cardStatusElement.textContent = 'accepted';  // Update the status of the card
                 }
             }
+            location.reload();
         } else {
             console.error("Failed to update food request.");
         }
@@ -93,7 +117,7 @@ function displayFoodRequests(data) {
         // Create a card for each food request
         const card = document.createElement('div');
         card.classList.add('card');
-        card.setAttribute('onclick', `showOtherRequestModal('${request.foodID}', 'https://www.pcma.org/wp-content/uploads/2018/11/food-allergies.jpg', '${request.details}', '${request.location}', '3.5 km', '${request.time}', 'Delivery location')`);
+        card.setAttribute('onclick', `showOtherRequestModal('${request.requestID}', 'https://www.pcma.org/wp-content/uploads/2018/11/food-allergies.jpg', '${request.details}', '${request.location}', '3.5 km', '${request.time}', 'Delivery location')`);
 
         // Create status indicator for the food request
         const status = document.createElement('div');
@@ -207,7 +231,8 @@ function loadSpecialRequests() {
                 // Add a status bar at the top-right corner of each card
                 const statusBar = document.createElement('div');
                 statusBar.classList.add('status-bar');
-                statusBar.textContent = 'pending'; // Set the initial status to 'pending'
+                statusBar.classList.add(request.status)
+                statusBar.textContent = request.status; // Set the initial status to 'pending'
                 card.appendChild(statusBar); // Append the status bar to the card
 
                 // Create icon for each request type
@@ -296,6 +321,7 @@ async function acceptSpecialRequest() {
                     cardStatusElement.textContent = 'accepted';  // Update the status of the card
                 }
             }
+            location.reload();
         } else {
             console.error("Failed to update special request.");
         }

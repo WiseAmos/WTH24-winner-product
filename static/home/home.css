@@ -119,7 +119,7 @@ body {
 
 .viewAll {
     padding: 0.5rem 1rem;
-    background-color: #6E966F;
+    background-color: #2e58d3;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -353,3 +353,31 @@ body {
     color: #ff4d4d;
     transform: scale(1.2); /* Add a subtle hover effect */
 }
+
+.floating-button {
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    right: 20px; /* Distance from the right of the viewport */
+    width: 60px;
+    height: 60px;
+    background-color: #2e58d3; /* Button color */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 1000; /* Ensure it stays above other elements */
+  }
+  
+  .floating-button:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
+  }
+  
+  .floating-button i {
+    font-size: 24px; /* Icon size */
+  }
+  
