@@ -7,12 +7,14 @@ import { update,set,push, getDatabase, ref, child, get } from "firebase/database
 import exp from "constants";
 const jwt = require('jsonwebtoken'); 
 const SECRET_KEY = 'your-secret-key'; 
-
+const axios = require('axios');
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
-app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '/public')));
 
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.get('/signup', (req,res) => {
   res.sendFile(path.join(__dirname + '/public/html/signup.html'))
@@ -65,6 +67,7 @@ app.get("/foodDetails", async(req, res) => {
 app.get("/map", async(req, res) => {
   res.sendFile(path.join(__dirname + "/static/map/map.html"));
 });
+
 app.get('/data', async (req, res) => { 
   const dbRef = ref(getDatabase()); 
  
@@ -395,5 +398,27 @@ app.post('/signup', async (req, res) => {
   } catch (error) {
       console.error("Error updating :( -> ", error.message);
       res.status(500).send({ success: false, error: error.message });
+  }
+});
+
+app.post("/predict", async (req, res) => {
+  try {
+    req.body = {
+
+    }
+    // Forward the request data to the Python service
+    const response = await axios.post("http://localhost:5001/predict", req.body);
+
+    // Return the prediction result to the user
+    res.json({
+      success: true,
+      prediction: response.data.prediction,
+    });
+  } catch (error) {
+    console.error("Error calling the Python service:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Failed to make prediction.",
+    });
   }
 });

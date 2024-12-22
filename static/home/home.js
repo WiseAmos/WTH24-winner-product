@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
-    const foodApiUrl = '/data/?path=announcements';
+    const foodApiUrl = '/data/?path=announcements/food';
     
     // Select the container where the food announcements will go
     const foodCardsContainer = document.querySelector('.foodCardsContainer');
@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchFoodAnnouncements() {
         try {
             const response = await fetch(foodApiUrl);
-            const data = await response.json();
+            const rawData = await response.json();
+            const data = Object.values(rawData);
             
             // Check if the data is an array
             if (Array.isArray(data)) {
@@ -69,8 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to fetch clothing data and store it in sessionStorage
     async function fetchClothingData() {
         try {
-            const response = await fetch('/data/?path=announcements/clothAnnouncements');
-            const data = await response.json();
+            const response = await fetch('/data/?path=announcements/clothes');
+            const rawData = await response.json();
+            const data = Object.values(rawData);
     
             // Save the data in sessionStorage
             sessionStorage.setItem('clothingData', JSON.stringify(data));
@@ -112,6 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 clothingCard.appendChild(img);
                 clothingCard.appendChild(title);
                 clothingCard.appendChild(info);
+    
+                // Add click event to navigate to the /clothingDetails page and store the clicked data
+                clothingCard.addEventListener('click', () => {
+                    // Clear previously clicked food items before storing the new data
+                    sessionStorage.removeItem('previouslyClicked');
+
+                    // Store the clicked food item data in sessionStorage under "previouslyClicked"
+                    let previouslyClicked = [];
+                    previouslyClicked.push(item); // Add the clicked food item to the array
+                    console.log(item);
+                    sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+    
+                    window.location.href = '/foodDetails';
+                });
     
                 // Append the clothing card to the content container
                 contentContainer.appendChild(clothingCard);
