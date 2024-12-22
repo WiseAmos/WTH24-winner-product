@@ -33,7 +33,6 @@ def predict():
     try:
         date = datetime.strptime(data["date"], "%Y-%m-%d")
         day_of_week = date.strftime("%A")  # Get day of the week
-
         # Determine if the date is a holiday using the holidays package
         sg_holidays = holidays.Singapore()  # Use Singapore holidays
         holiday_flag = 1 if date in sg_holidays else 0
@@ -55,28 +54,31 @@ def predict():
         type_of_shop = row["type_of_shop"]
 
         # Construct numerical features
-        numerical_features = [
-            latitude,
-            longitude,
-            closing_time,
-            holiday_flag
-        ]
+        numerical_features = {
+            "latitude": latitude,
+            "longitude": longitude,
+            "closing_time": closing_time,
+            "holiday_flag": holiday_flag
+        }
 
         # Add one-hot encoded categorical features
         categorical_features = pd.DataFrame([[type_of_shop, day_of_week, weather]],
                                              columns=["type_of_shop", "day_of_week", "weather"])
         # One-hot encode using the saved encoder
         encoded_features = encoder.transform(categorical_features)
+        encoded_features_df = pd.DataFrame(encoded_features, columns=encoder.get_feature_names_out(["type_of_shop", "day_of_week", "weather"]))
 
-        # Combine numerical and categorical features
-        all_features = np.hstack([numerical_features, encoded_features])
+        # Combine numerical and categorical features into a single DataFrame
+        all_features = pd.concat([pd.DataFrame([numerical_features]), encoded_features_df], axis=1)
 
-        # Prepare features for prediction
-        dmatrix = xgb.DMatrix(all_features)
+        
+        dmatrix = xgb.DMatrix(all_features, feature_names=list(all_features.columns))
+
         prediction = model.predict(dmatrix)
 
-        # Add the prediction to the dictionary
-        predictions[stall_name] = prediction[0]
+        
+        predictions[stall_name] = float(prediction[0])  
+
 
     # Return predictions as a JSON response
     return jsonify(predictions)
