@@ -32,6 +32,7 @@ document.querySelector("form").addEventListener("submit", async function (event)
         mobility,
         mobilityIssues,
     });
+    window.location.href = "/home";
 });
 
 async function postNormalUser({ accountName, name, dob, phone, address, dietaryNeeds, mobility, mobilityIssues }) {

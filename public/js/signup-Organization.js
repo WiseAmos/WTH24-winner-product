@@ -35,6 +35,7 @@ document.querySelector("form").addEventListener("submit", async function (event)
         about,
         password,
     });
+    window.location.href = "/organisation";
 });
 
 async function postOrganization({ accountName, organizationName, representativeName, designation, dob, email, phone, addresses, about, password }) {
@@ -75,6 +76,7 @@ async function postOrganization({ accountName, organizationName, representativeN
             const token = json.token;
             localStorage.setItem("authToken", token);
         }
+        
     } catch (error) {
         console.error(error.message);
     }
