@@ -157,6 +157,7 @@ function updateProgress(current, total) {
         
             data = temp_data
             console.log(data)
+
             // Check if the data is an array
             if (Array.isArray(data)) {
                 // Save the data in sessionStorage
@@ -165,9 +166,14 @@ function updateProgress(current, total) {
                 // Clear any previous content in the container
                 foodCardsContainer.innerHTML = '';
 
+                let count = 0;
+
                 // Loop through the data and dynamically create food cards
                 data.forEach(foodItem => {
                     const { location, store, title, image } = foodItem;
+                    count += 1;
+                    foodItem.id = count;
+                    foodItem.type = "food"
 
                     // Create a new div for the food card
                     const foodCard = document.createElement('div');
