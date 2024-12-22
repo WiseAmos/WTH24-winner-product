@@ -16,7 +16,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(sessionStorage.getItem("clicked")=="true"){
         console.log("CLICKED")
         const newQuantityLeft = food["quantityLeft"] - 1;
+        console.log(food);
+        console.log("announcements/"+food["type"]+"/" + food_identifier)
         postData("announcements/"+food["type"]+"/" + food_identifier, { quantityLeft: newQuantityLeft });
+        
         setTimeout(() => updateProgress((food["totalQuantity"]-newQuantityLeft),food["totalQuantity"]), 10);
         sessionStorage.setItem("clicked",false)
 
