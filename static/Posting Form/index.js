@@ -188,13 +188,10 @@ function updateProgress(current, total) {
 
                     // Add click event to navigate to the /foodDetails page and store the clicked data
                     foodCard.addEventListener('click', () => {
-                        // Store the clicked food item data in sessionStorage under "previouslyClicked"
-                        let previouslyClicked = JSON.parse(sessionStorage.getItem('previouslyClicked')) || [];
-                        previouslyClicked.push(foodItem); // Add the clicked food item to the array
-                        sessionStorage.setItem('previouslyClicked', JSON.stringify(previouslyClicked)); // Save it back to sessionStorage
+                      sessionStorage.setItem('previouslyClicked', JSON.stringify(foodItem)); // Save it back to sessionStorage
 
-                        // Redirect to the food details page
-                        window.location.href = '/foodDetails';
+                      // Redirect to the food details page
+                      window.location.href = '/foodDetails';
                     });
 
                     // Append the food card to the food cards container
