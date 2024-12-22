@@ -181,6 +181,22 @@ app.post("/announcement/update", async (req, res) => {
 
 // POST Route to Create a New Announcement
 app.post("/announcement/new", async (req, res) => {
+  const { category, data } = req.body;
+
+  if (!category || !data) {
+    return res.status(400).send({ error: "Category and data are required" });
+  }
+
+  try {
+    const dbRef = ref(getDatabase());
+    const newAnnouncementRef = push(child(dbRef, `data/announcements/${category}`));
+    await set(newAnnouncementRef, data);
+
+    res.status(200).send({ success: true, message: "Announcement created successfully" });
+  } catch (error) {
+    console.error("Error creating announcement:", error.message);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
   
 })
 
