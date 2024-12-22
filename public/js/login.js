@@ -45,7 +45,7 @@ async function login({ accountName, password }) {
             localStorage.setItem("authToken", token);
 
           
-            window.location.href = "#"; 
+            window.location.href = "/home"; 
         } else {
             alert(json.message || "Login failed. Please try again.");
         }

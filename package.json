@@ -23,6 +23,7 @@
     "array.prototype.reduce": "^1.0.7",
     "arraybuffer.prototype.slice": "^1.0.4",
     "available-typed-arrays": "^1.0.7",
+    "axios": "^1.7.9",
     "babel-plugin-polyfill-corejs2": "^0.4.12",
     "babel-plugin-polyfill-corejs3": "^0.10.6",
     "babel-plugin-polyfill-regenerator": "^0.6.3",
