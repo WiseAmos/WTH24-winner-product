@@ -83,7 +83,7 @@ async function getData() {
 
 
 async function postVolunteer({ accountName, image, name, dob, email, phone, password }) {
-    const url = "/data";
+    const url = "/signup";
     try {
         const response = await fetch(url, {
             method: "POST",
@@ -105,11 +105,21 @@ async function postVolunteer({ accountName, image, name, dob, email, phone, pass
                 "Content-type": "application/json; charset=UTF-8"
             }
         });
+
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
         }
+
         const json = await response.json();
-        console.log(json);
+        console.log("Response:", json);
+
+        if (json.success) {
+            const token = json.token; // Store the JWT token
+            console.log("JWT Token:", token);
+
+            // Optionally save the token to localStorage or cookies
+            localStorage.setItem('authToken', token);
+        }
     } catch (error) {
         console.error(error.message);
     }

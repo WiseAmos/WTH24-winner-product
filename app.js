@@ -3,14 +3,37 @@ import bodyParser, { json } from "body-parser";
 import path from 'path';
 const { db } = require("./firebase.js");
 import { update,set,push, getDatabase, ref, child, get } from "firebase/database";
-
+import exp from "constants";
+const jwt = require('jsonwebtoken'); 
+const SECRET_KEY = 'your-secret-key'; 
 
 const app = express();
 
 app.use(express.static(path.join(__dirname, '/static')));
+app.use(express.static(path.join(__dirname, '/public')))
+
+
+app.get('/signup', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup.html'))
+});
+app.get('/signup/signup-volunteer', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-volunteer.html'))
+});
+app.get('/signup/signup-food', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-food.html'))
+});
+app.get('/signup/signup-Organization', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-Organization.html'))
+});
+app.get('/signup/signup-Normal', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/signup-Normal.html'))
+});
+app.get('/login', (req,res) => {
+  res.sendFile(path.join(__dirname + '/public/html/login.html'))
+});
 
 app.get('/announcement', (req, res) => {
-    res.sendFile(path.join(__dirname, '/static/post/post.html'));
+    res.sendFile(path.join(__dirname + '/static/post/post.html'));
 });
 
 app.use(express.json());
@@ -213,3 +236,96 @@ app.listen(PORT, () => {
 });
 
 
+
+
+app.post('/login', async (req, res) => {
+  const { accountName, password } = req.body; // Get accountName and password from request body
+
+  if (!accountName || !password) {
+      return res.status(400).send({ success: false, message: 'Account Name and Password are required.' });
+  }
+
+  try {
+      const dbRef = ref(getDatabase());
+      const path = "users"; // Path to all user accounts
+
+      // Fetch all accounts from the database
+      const snapshot = await get(child(dbRef, `data/${path}`));
+
+      if (snapshot.exists()) {
+          const accounts = snapshot.val(); // JSON of accounts
+
+          // Check if the accountName exists
+          if (accounts[accountName]) {
+              const account = accounts[accountName];
+
+              // Validate the password
+              if (account.password === password) {
+                  // Generate JWT
+                  const token = jwt.sign(
+                      {
+                          accountName: accountName,
+                          role: account.role,
+                      },
+                      SECRET_KEY,
+                      { expiresIn: '1h' } // Token expires in 1 hour
+                  );
+
+                  return res.send({
+                      success: true,
+                      message: 'Login successful!',
+                      token: token, 
+                      data: {
+                          accountName: accountName,
+                          role: account.role,
+                          
+                      },
+                  });
+              } else {
+                  return res.status(401).send({ success: false, message: 'Invalid password.' });
+              }
+          } else {
+              return res.status(404).send({ success: false, message: 'Account not found.' });
+          }
+      } else {
+          return res.status(404).send({ success: false, message: 'No user data found in the database.' });
+      }
+  } catch (error) {
+      console.error('Error during login:', error);
+      return res.status(500).send({ success: false, message: 'Internal server error.' });
+  }
+});
+
+app.post('/signup', async (req, res) => {
+  try {
+      const received = req.body;
+      console.log("Path:", received["path"]);
+      console.log("Data:", received["data"]);
+
+      const usersRef = ref(db, "data/" + received["path"]);
+      const newKey = push(usersRef).key; // Use filtered data for update
+      await update(usersRef, received["data"]); // Update with filtered data
+
+      console.log("Successfully updated, YOU CAN'T DELETE IT NOW :D!");
+
+      // Extract AccountName and AccountRole for JWT
+      const accountName = Object.keys(received["data"])[0]; // Extract AccountName
+      const accountRole = received["data"][accountName].role; // Extract AccountRole
+
+      // Generate a JWT Token
+      const token = jwt.sign(
+          {
+              accountName: accountName,
+              accountRole: accountRole,
+          },
+          SECRET_KEY,
+          { expiresIn: '1h' } // Token valid for 1 hour
+      );
+
+      // Respond with the token
+      res.status(200).send({ success: true, token: token });
+  } catch (error) {
+      console.error("Error updating :( -> ", error.message);
+      res.status(500).send({ success: false, error: error.message });
+  }
+});
