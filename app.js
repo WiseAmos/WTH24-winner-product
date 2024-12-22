@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from 'path';
+import admin from "firebase-admin";
 const { db } = require("./firebase.js");
 import { update,set,push, getDatabase, ref, child, get } from "firebase/database";
 
@@ -124,6 +125,61 @@ app.post('/data', async (req, res) => {
 //   }
 
 //   postData()
+
+
+// Route to update food request status
+app.put("/updateFoodRequestStatus", async (req, res) => {
+  const { foodId, status } = req.body;
+
+  if (!foodId || !status) {
+    return res.status(400).json({ error: "foodId and status are required" });
+  }
+
+  try {
+    // Get a reference to the food request in the database
+    const db = getDatabase();
+    const foodRequestRef = ref(db, `data/foodRequests/${foodId}`);
+    console.log(status);
+
+    // Update the status field of the food request
+    await update(foodRequestRef, {
+      status: status,
+    });
+
+    // Send success response
+    return res.status(200).json({ message: "Food request status updated successfully" });
+  } catch (error) {
+    console.error("Error updating food request status:", error);
+    return res.status(500).json({ error: "Failed to update food request status" });
+  }
+});
+
+// Route to update special request status
+app.put("/updateSpecialRequestStatus", async (req, res) => {
+  const { requestId, status } = req.body;
+
+  if (!requestId || !status) {
+    return res.status(400).json({ error: "requestId and status are required" });
+  }
+
+  try {
+    // Get a reference to the special request in the database
+    const db = getDatabase();
+    const specialRequestRef = ref(db, `data/specialRequests/${requestId}`);
+    console.log(status);
+
+    // Update the status field of the special request
+    await update(specialRequestRef, {
+      status: status,
+    });
+
+    // Send success response
+    return res.status(200).json({ message: "Special request status updated successfully" });
+  } catch (error) {
+    console.error("Error updating special request status:", error);
+    return res.status(500).json({ error: "Failed to update special request status" });
+  }
+});
 
 
   app.get('/nukedatabase', async (req, res) => {
