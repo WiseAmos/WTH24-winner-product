@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // API endpoint for food announcements
-    const foodApiUrl = '/data/?path=announcements';
+    const foodApiUrl = '/data/?path=announcements/food';
     
     // Select the container where the food announcements will go
     const foodCardsContainer = document.querySelector('.foodCardsContainer');
@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchFoodAnnouncements() {
         try {
             const response = await fetch(foodApiUrl);
-            const data = await response.json();
+            const rawData = await response.json();
+            const data = Object.values(rawData);
             
             // Check if the data is an array
             if (Array.isArray(data)) {
@@ -69,8 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to fetch clothing data and store it in sessionStorage
     async function fetchClothingData() {
         try {
-            const response = await fetch('/data/?path=announcements/clothAnnouncements');
-            const data = await response.json();
+            const response = await fetch('/data/?path=announcements/clothes');
+            const rawData = await response.json();
+            const data = Object.values(rawData);
     
             // Save the data in sessionStorage
             sessionStorage.setItem('clothingData', JSON.stringify(data));
